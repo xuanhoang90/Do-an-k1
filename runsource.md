@@ -1,9 +1,8 @@
 vua keo source thi cai dat
-composer install
-npm i
+1. composer install
+2. npm i
 
 
----
 Luc chay project
 mo 2 terminal
 1. npm run dev
