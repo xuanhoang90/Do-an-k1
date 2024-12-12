@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Models\Admin\Category;
 
 use Illuminate\Http\Request;
 
@@ -9,9 +10,9 @@ class CategoryController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+       return view('modules.category.index');
     }
 
     /**
