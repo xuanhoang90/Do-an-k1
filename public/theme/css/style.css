@@ -2487,7 +2487,10 @@ h5.team-sub-title {
 <!--start lavewell call to action area css-->
 ===========================================*/
 .call-to-action-area {
-  background: #f4f0ed;
+  /* background: #f4f0ed; */
+  /* margin-bottom: 50px;
+  margin-top: 50px; */
+  background: url(../images/caligraphy/17.jpg);
 }
 
 .call-to-action-area.inner {
@@ -2500,7 +2503,7 @@ h5.team-sub-title {
 }
 
 .row.call-bg {
-  background: url(../images/home-2/call-action-bg.jpg);
+  /* background: url(../images/caligraphy/17.jpg); */
   background-repeat: no-repeat;
   background-position: center;
   padding: 65px 0px 58px 65px;
@@ -2590,12 +2593,11 @@ h1.call-sub-title {
 <!--start lavewell breadcumb Area css-->
 ===========================================*/
 .breadcumb-area {
-  background: url(../images/inner/breadcumb-bg.png);
+  background: url(../images/caligraphy/13.jpg);
   padding: 230px 0 156px;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  margin-top: -100px;
 }
 
 .breadcumb-content h4 {

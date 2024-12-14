@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Header(options) {
   return (
@@ -8,21 +9,19 @@ export default function Header(options) {
           <div className="row d-flex align-items-center">
             <div className="col-lg-2">
               <div className="logo cursor-scale">
-                <a className="logo_img" href="index.html" title="lavewell">
+                <Link to="/" className="logo_img" title="lavewell">
                   <img src="/theme/images/logo-b.png" alt="logo" />
-                </a>
-                <a className="main_sticky" href="index.html" title="lavewell">
+                </Link>
+                <Link to="/" className="main_sticky" title="lavewell">
                   <img src="theme/images/logo.png" alt="astute" />
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col-lg-8">
               <nav className="lavewell_menu">
                 <ul className="nav_scroll">
                   <li>
-                    <a className="cursor-scale" href="#">
-                      Home
-                    </a>
+                    <Link to="/" className="cursor-scale">Home</Link>
                   </li>
                   <li>
                     <a className="cursor-scale" href="#">
@@ -30,13 +29,13 @@ export default function Header(options) {
                     </a>
                     <ul className="sub-menu">
                       <li>
-                        <a href="#">Viet Nam</a>
+                        <Link to="/blog" className="cursor-scale">Viet Nam</Link>
                       </li>
                       <li>
-                        <a href="#">China</a>
+                        <Link to="/blog" className="cursor-scale">China</Link>
                       </li>
                       <li>
-                        <a href="#">India</a>
+                        <Link to="/blog" className="cursor-scale">India</Link>
                       </li>
                     </ul>
                   </li>
@@ -46,17 +45,15 @@ export default function Header(options) {
                     </a>
                     <ul className="sub-menu">
                       <li>
-                        <a href="#">Profile</a>
+                        <Link to="/profile" className="cursor-scale">Profile</Link>
                       </li>
                       <li>
-                        <a href="#">Practice</a>
+                        <Link to="/practice" className="cursor-scale">Practice</Link>
                       </li>
                     </ul>
                   </li>
                   <li>
-                    <a className="cursor-scale" href="#">
-                      Network
-                    </a>
+                    <Link to="/network" className="cursor-scale">Network</Link>
                   </li>
                 </ul>
               </nav>

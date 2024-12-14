@@ -28,7 +28,7 @@ export default function Footer(options) {
             <div className="footer-logo">
               <a href="index.html">
                 {" "}
-                <img src="theme/images/home-1/logo-b.png" alt="logo" />
+                <img src="theme/images/logo-b.png" alt="logo" />
               </a>
             </div>
           </div>
@@ -52,12 +52,6 @@ export default function Footer(options) {
             </div>
           </div>
         </div>
-        {/* <div class="footer-shape">
-        <img src="assets/images/home-1/footer-shape.png" alt="shape">
-        </div>
-        <div class="footer-shape2">
-          <img src="assets/images/home-1/footer-shape2.png" alt="shape2">
-            </div> */}
       </div>
     </div>
   )
