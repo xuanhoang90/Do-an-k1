@@ -28,7 +28,7 @@ export default function Footer(options) {
             <div className="footer-logo">
               <a href="index.html">
                 {" "}
-                <img src="theme/images/logo-b.png" alt="logo" />
+                <img width={200} src="logo.png" alt="logo" />
               </a>
             </div>
           </div>

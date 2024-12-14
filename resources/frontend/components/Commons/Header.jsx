@@ -10,10 +10,10 @@ export default function Header(options) {
             <div className="col-lg-2">
               <div className="logo cursor-scale">
                 <Link to="/" className="logo_img" title="lavewell">
-                  <img src="/theme/images/logo-b.png" alt="logo" />
+                  <img width={200} src="/logo.png" alt="logo" />
                 </Link>
                 <Link to="/" className="main_sticky" title="lavewell">
-                  <img src="theme/images/logo.png" alt="astute" />
+                  <img width={200} src="logo.png" alt="astute" />
                 </Link>
               </div>
             </div>
