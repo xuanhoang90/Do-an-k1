@@ -30,7 +30,7 @@
     </a>
     <ul class="dropdown-menu">
         <li>
-            <a href="{{route('admin.social_postment.index')}}">Social Postment</a>
+            <a href="{{route('admin.socialpostcomment.index')}}">Social Post Comment</a>
         </li>
     </ul>
 </li>

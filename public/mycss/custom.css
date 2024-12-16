@@ -1,7 +1,3 @@
-.modal-backdrop {
-    z-index: -1;
-  }
-
 
   .is-valid {
     border-color: green !important;
@@ -177,8 +173,3 @@
 }
 
 
-.swal-toast-large {
-    font-size: 1.2rem !important;
-    padding: 1.5rem !important;
-    width: 350px !important;
-}

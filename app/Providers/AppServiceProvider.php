@@ -28,27 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::share('routes', [
-            [
-                'group' => 'User Management',
-                'items' => [
-                    ['prefix' => 'user', 'name' => 'user.', 'controller' => UserController::class],
-                    ['prefix' => 'level', 'name' => 'level.', 'controller' => LevelController::class],
-                ],
-            ],
-            [
-                'group' => 'Category Management',
-                'items' => [
-                    ['prefix' => 'category', 'name' => 'category.', 'controller' => CategoryController::class],
-                    ['prefix' => 'lesson', 'name' => 'lesson.', 'controller' => LessonController::class],
-                ],
-            ],
-            [
-                'group' => 'Social Management',
-                'items' => [
-                    ['prefix' => 'social-post', 'name' => 'social-post.', 'controller' => SocialPostController::class],
-                ],
-            ],
-        ]);
+       //
     }
 }

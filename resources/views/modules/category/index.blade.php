@@ -51,7 +51,7 @@
                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editCategoryModal-{{ $category->id }}">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
-                            </button>
+                            
                             <a href="{{ route('admin.category.destroy', $category->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>
