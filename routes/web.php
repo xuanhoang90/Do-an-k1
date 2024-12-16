@@ -10,15 +10,6 @@ use App\Http\Controllers\Admin\SocialPostCommentController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('form');
-});
-
-Route::get('/user', function () {
-    return view('form');
-});
-
-
 Route::prefix('admin')->name('admin.')->group(function () {
     $routes = [
         [
@@ -59,3 +50,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     }
 });
 
+Route::get('/{any}', function () {
+    return view('frontend.app'); // File Blade chứa React app
+})->where('any', '.*');
