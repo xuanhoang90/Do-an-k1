@@ -8,7 +8,13 @@ class User extends Model
 {
 
     protected $guarded = [];
-    protected $table = 'users';
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'status' ,
+        'type'
+    ];
     public function socialPosts()
     {
         return $this->hasMany(SocialPost::class);

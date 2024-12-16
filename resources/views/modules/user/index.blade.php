@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Forms</title>
+    <title>User</title>
     <style>
       #loader {
         transition: all 0.3s ease-in-out;
@@ -57,7 +57,7 @@
     @vite(['resources/assets/styles/index.scss', 'resources/assets/scripts/index.js'])
   </head>
   <body class="app">
-    <!-- @TOC -->
+    {{-- <!-- @TOC -->
     <!-- =================================================== -->
     <!--
       + @Page Loader
@@ -75,16 +75,39 @@
     <!-- =================================================== -->
     <div id='loader'>
       <div class="spinner"></div>
-    </div>
+    </div> --}}
 
+    
+    @push('js')
+    <script src="{{ asset('administrator/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    @endpush
+    
+    @push('hanldejs')
+    
     <script>
-      window.addEventListener('load', function load() {
-        const loader = document.getElementById('loader');
-        setTimeout(function() {
-          loader.classList.add('fadeOut');
-        }, 300);
-      });
-    </script>
+        $(function () {
+          $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    
+        function confirmDelete(module) {
+          return confirm(`Are u sure u want to delete this ${module} ?`)
+        }
+      </script>
+    @endpush
 
     <!-- @App Content -->
     <!-- =================================================== -->
@@ -100,7 +123,7 @@
                   <div class="peers ai-c fxw-nw">
                     <div class="peer">
                       <div class="logo">
-                        <img src="assets/static/images/logo.png" alt="">
+                        {{-- <img src="assets/static/images/logo.png" alt=""> --}}
                       </div>
                     </div>
                     <div class="peer peer-greed">
@@ -515,101 +538,49 @@
 
         <!-- ### $App Screen Content ### -->
         <main class='main-content bgc-grey-100'>
-          <div id='mainContent'>
-              <div class="masonry-item">
-                <div class="bgc-white p-20 bd">
-                  <h6 class="c-grey-900">Thông tin user</h6>
-                  <div class="mT-30">
-                    <form>
-                      <div class="row">
-                        <div class="mb-3">
-                          <label class="form-label" for="inputAddress">Fullname</label>
-                          <input type="text" class="form-control" id="inputAddress" placeholder="Điền đầy đủ họ tên bạn vào đây nhé">
-                        </div>
-                        <div class="mb-3 col-md-6">
-                          <label class="form-label" for="inputEmail4">Email</label>
-                          <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                        </div>
-                        <div class="mb-3 col-md-6">
-                          <label class="form-label" for="inputPassword4">Password</label>
-                          <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                        </div>
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label" for="inputAddress2">Address</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                      </div>
-                      <div class="row">
-                        <div class="mb-3 col-md-6">
-                          <label class="form-label" for="inputCity">City</label>
-                          <input type="text" class="form-control" id="inputCity">
-                        </div>
-                        <div class="mb-3 col-md-4">
-                          <label class="form-label" for="inputState">Level</label>
-                          <select id="inputState" class="form-control">
-                            <option selected>Chọn cấp độ phù hợp với bạn</option>
-                            <option>Kids</option>
-                            <option>Teen</option>
-                            <option>Adult</option>
-                            <option>Professional </option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="mb-3 col-md-6">
-                          <label class="form-label fw-500">Birthdate</label>
-                          <div class="timepicker-input input-icon mb-3">
-                            <div class="input-group">
-                              <div class="input-group-text bgc-white bd bdwR-0">
-                                <i class="ti-calendar"></i>
-                              </div>
-                              <input type="text" class="form-control bdc-grey-200 start-date" placeholder="Datepicker" data-provide="datepicker">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {{-- <div class="mb-3">
-                        <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                          <input type="checkbox" id="inputCall2" name="inputCheckboxesCall" class="peer">
-                          <label for="inputCall2" class="form-label peers peer-greed js-sb ai-c">
-                            <span class="peer peer-greed">Call John for Dinner</span>
-                          </label>
-                        </div>
-                      </div> --}}
-                      <button type="submit" class="btn btn-primary btn-color">Creat Account</button>
-                    </form>
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                    <h4 class="c-grey-900 mB-20">User list</h4>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">Id</th>
+                          <th scope="col">Fullname</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach ($users as $user)
+                          <tr>
+                            <th scope="row">{{$loop->iteration}}</th>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->name}}</td>
+                            <td>
+                              @if ($user->status == 1)
+                                <span class="badge bg-success">Active</span>
+                              @elseif ($user->status == 2)
+                                  <span class="badge bg-danger">Banned</span>
+                              @endif
+                            <td>
+                              <a href="{{ route('admin.user.edit', ['id' => $user->id]) }}"><input type="button" value="Edit"></input></a>
+                              <a onclick="return confirmDelete('user')" href="{{ route('admin.user.destroy', ['id' => $user->id]) }}"><input type="button" value="Delete"></input></a>
+                            </td>
+                          </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-              </div>
-                    </form>
-                    <script>
-                      // Example starter JavaScript for disabling form submissions if there are invalid fields
-                      (function() {
-                        'use strict';
-
-                        window.addEventListener('load', function() {
-                          var form = document.getElementById('needs-validation');
-                          form.addEventListener('submit', function(event) {
-                            if (form.checkValidity() === false) {
-                              event.preventDefault();
-                              event.stopPropagation();
-                            }
-                            form.classList.add('was-validated');
-                          }, false);
-                        }, false);
-                      })();
-                    </script>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
         </main>
 
         <!-- ### $App Screen Footer ### -->
-        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
+        {{-- <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
           <span>Copyright © 2024 Designed by <a href="https://colorlib.com" target="_blank" rel="nofollow noopener noreferrer" title="Colorlib">Colorlib</a>. All rights reserved.</span>
-        </footer>
+        </footer> --}}
       </div>
     </div>
   </body>

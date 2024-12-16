@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Forms</title>
+    <title>User</title>
     <style>
       #loader {
         transition: all 0.3s ease-in-out;
@@ -518,71 +518,75 @@
           <div id='mainContent'>
               <div class="masonry-item">
                 <div class="bgc-white p-20 bd">
-                  <h6 class="c-grey-900">Thông tin user</h6>
+                  <h6 class="c-grey-900">User infomation</h6>
                   <div class="mT-30">
-                    <form>
+                    <form method="POST" action="{{ route('admin.user.store') }}">
+                      @csrf
+                      @if ($errors->any())
+                      <div class="alert alert-danger">
+                        <ul>
+                          @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                          @endforeach
+                        </ul>
+                      </div>
+                      @endif
+
                       <div class="row">
                         <div class="mb-3">
                           <label class="form-label" for="inputAddress">Fullname</label>
-                          <input type="text" class="form-control" id="inputAddress" placeholder="Điền đầy đủ họ tên bạn vào đây nhé">
+                          <input type="text" class="form-control" name="name" id="name" placeholder="Please fill your fullname" value="{{old('name')}}">
                         </div>
                         <div class="mb-3 col-md-6">
                           <label class="form-label" for="inputEmail4">Email</label>
-                          <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                          <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{old('email')}}">
                         </div>
+                      </div>
                         <div class="mb-3 col-md-6">
                           <label class="form-label" for="inputPassword4">Password</label>
-                          <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                          <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                         </div>
-                      </div>
-                      <div class="mb-3">
-                        <label class="form-label" for="inputAddress2">Address</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                      </div>
-                      <div class="row">
                         <div class="mb-3 col-md-6">
-                          <label class="form-label" for="inputCity">City</label>
-                          <input type="text" class="form-control" id="inputCity">
+                          <label class="form-label" for="inputPassword4">Confirm password</label>
+                          <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm password">
                         </div>
                         <div class="mb-3 col-md-4">
-                          <label class="form-label" for="inputState">Level</label>
-                          <select id="inputState" class="form-control">
-                            <option selected>Chọn cấp độ phù hợp với bạn</option>
-                            <option>Kids</option>
-                            <option>Teen</option>
-                            <option>Adult</option>
-                            <option>Professional </option>
+                          <label class="form-label" for="inputState">Status</label>
+                          <select id="status" name="status" class="form-control">
+                            <option value="1" {{old('status') == 1 ? 'selected' : ''}}>Active </option>
+                            <option value="2" {{old('status') == 2 ? 'selected' : ''}}>Banned</option>
                           </select>
                         </div>
                       </div>
-                      <div class="row">
+                      {{-- <div class="row">
                         <div class="mb-3 col-md-6">
-                          <label class="form-label fw-500">Birthdate</label>
+                          <label class="form-label fw-500">Birthday</label>
                           <div class="timepicker-input input-icon mb-3">
                             <div class="input-group">
                               <div class="input-group-text bgc-white bd bdwR-0">
                                 <i class="ti-calendar"></i>
                               </div>
-                              <input type="text" class="form-control bdc-grey-200 start-date" placeholder="Datepicker" data-provide="datepicker">
+                              <input type="text" class="form-control bdc-grey-200 start-date" name="birthday" value="{{old('birthday')}}"  placeholder="Datepicker" data-provide="datepicker">
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> --}}
                       {{-- <div class="mb-3">
                         <div class="checkbox checkbox-circle checkbox-info peers ai-c">
                           <input type="checkbox" id="inputCall2" name="inputCheckboxesCall" class="peer">
                           <label for="inputCall2" class="form-label peers peer-greed js-sb ai-c">
                             <span class="peer peer-greed">Call John for Dinner</span>
+                            <span class="peer peer-greed">Call John for Dinner</span>
                           </label>
-                        </div>
-                      </div> --}}
+                        </div> --}}
+                      </div>
                       <button type="submit" class="btn btn-primary btn-color">Creat Account</button>
                     </form>
                   </div>
                 </div>
               </div>
-                    </form>
-                    <script>
+            </form>
+                    {{-- <script>
                       // Example starter JavaScript for disabling form submissions if there are invalid fields
                       (function() {
                         'use strict';
@@ -598,18 +602,13 @@
                           }, false);
                         }, false);
                       })();
-                    </script>
+                    </script> --}}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </main>
-
-        <!-- ### $App Screen Footer ### -->
-        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
-          <span>Copyright © 2024 Designed by <a href="https://colorlib.com" target="_blank" rel="nofollow noopener noreferrer" title="Colorlib">Colorlib</a>. All rights reserved.</span>
-        </footer>
       </div>
     </div>
   </body>
