@@ -21,8 +21,8 @@ return new class extends Migration
             $table->tinyInteger('status')->default(1);
             $table->unsignedBigInteger('level_id')->nullable();
             $table->timestamps();
-            // $table->unsignedBigInteger('created_by');
-            // $table->unsignedBigInteger('updated_by');
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by');
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
         });
     }

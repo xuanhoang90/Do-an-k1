@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->tinyInteger('status')->default(1)->comment('1-Show : 2-Hide');
             $table->timestamps();
-            // $table->unsignedBigInteger('created_by');
-            // $table->unsignedBigInteger('updated_by');
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by');
         });
     }
 

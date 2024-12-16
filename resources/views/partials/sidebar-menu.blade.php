@@ -1,24 +1,56 @@
-<ul class="sidebar-menu scrollable pos-r">
-    @foreach ($routes as $routeGroup)
-        <li class="nav-item dropdown">
-            <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                    <i class="c-orange-500 ti-layout-list-thumb"></i>
-                </span>
-                <span class="title">{{ $routeGroup['group'] }}</span>
-                <span class="arrow">
-                    <i class="ti-angle-right"></i>
-                </span>
-            </a>
-            <ul class="dropdown-menu">
-                @foreach ($routeGroup['items'] as $route)
-                    <li>
-                        <a class="sidebar-link" href="{{ route('admin.' . $route['name'] . 'index') }}">
-                            {{ ucfirst(str_replace('-', ' ', $route['prefix'])) }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
+<li class="nav-item dropdown">
+    <a class="dropdown-toggle" href="javascript:void(0);">
+        <span class="icon-holder">
+            <i class="c-orange-500 ti-layout-list-thumb"></i>
+        </span>
+        <span class="title">Category Mananger</span>
+        <span class="arrow">
+            <i class="ti-angle-right"></i>
+        </span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="sidebar-link" href="{{route('admin.category.index')}}">Category</a>
         </li>
-    @endforeach
-</ul>
+        <li>
+            <a class="sidebar-link" href="{{route('admin.lesson.index')}}">Lesson</a>
+        </li>
+    </ul>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="dropdown-toggle" href="javascript:void(0);">
+        <span class="icon-holder">
+            <i class="c-purple-500 ti-map"></i>
+        </span>
+        <span class="title">Social Mananger</span>
+        <span class="arrow">
+            <i class="ti-angle-right"></i>
+        </span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="{{route('admin.social_postment.index')}}">Social Postment</a>
+        </li>
+    </ul>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="dropdown-toggle" href="javascript:void(0);">
+        <span class="icon-holder">
+            <i class="c-red-500 ti-files"></i>
+        </span>
+        <span class="title">User Mananger</span>
+        <span class="arrow">
+            <i class="ti-angle-right"></i>
+        </span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="sidebar-link" href="{{route('admin.user.index')}}">Blank</a>
+        </li>
+        <li>
+            <a class="sidebar-link" href="{{route('admin.level.index')}}">Level</a>
+        </li>
+    </ul>
+</li>

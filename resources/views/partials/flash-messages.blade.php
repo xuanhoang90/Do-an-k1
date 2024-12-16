@@ -1,94 +1,38 @@
-@if (session('success'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'success',
-            title:  session('success') ,
-            showConfirmButton: false,
-            timer: 3000,
-            customClass: {
-                popup: 'swal-toast-large', 
-            }
-        });
-    });
-</script>
-@endif
+@session('success')
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ $value }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endsession
 
-@if (session('error'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'error',
-            title: session('error') ,
-            showConfirmButton: false,
-            timer: 3000,
-            customClass: {
-                popup: 'swal-toast-large',
-            }
-        });
-    });
-</script>
-@endif
+@session('error')
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ $value }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endsession
 
-@if (session('warning'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'warning',
-            title: session('warning'),
-            showConfirmButton: false,
-            timer: 3000,
-            customClass: {
-                popup: 'swal-toast-large',
-            }
-        });
-    });
-</script>
-@endif
+@session('warning')
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ $value }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endsession
 
-@if (session('info'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'info',
-            title: session('info'),
-            showConfirmButton: false,
-            timer: 3000,
-            customClass: {
-                popup: 'swal-toast-large',
-            }
-        });
-    });
-</script>
-@endif
+@session('info')
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ $value }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endsession
 
 @if ($errors->any())
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'error',
-            title: '{{$error->$message}}',
-            html: `<ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>`,
-            showConfirmButton: false,
-            timer: 3000,
-            customClass: {
-                popup: 'swal-toast-large',
-            }
-        });
-    });
-</script>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 @endif
