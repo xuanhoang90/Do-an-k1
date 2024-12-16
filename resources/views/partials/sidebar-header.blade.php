@@ -5,7 +5,7 @@
 <div class="peers ai-c fxw-nw">
 <div class="peer">
 <div class="logo">
-<img src="assets/static/images/logo.png" alt="">
+<img src="{{ asset('assets/static/images/logo.png') }}" alt="">
 </div>
 </div>
 <div class="peer peer-greed">

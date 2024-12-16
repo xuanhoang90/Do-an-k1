@@ -103,6 +103,7 @@
 <script>
     $('#createCategoryForm').on('submit', function(e) {
         e.preventDefault();
+
         const form = $(this);
         const url = form.attr('action');
 
