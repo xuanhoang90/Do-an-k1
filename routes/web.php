@@ -99,3 +99,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('destroy/{id}', 'destroy')->name('destroy');
     });
 });
+
+Route::get('/{any}', function () {
+    return view('frontend.app'); // File Blade chứa React app
+})->where('any', '.*');
