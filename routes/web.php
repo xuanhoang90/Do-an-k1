@@ -5,9 +5,11 @@ use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SocialPostController;
 use App\Http\Controllers\Admin\SocialPostCommentController;
 use App\Http\Controllers\Admin\SocialPostLikeController;
 use App\Http\Controllers\Admin\LessonHistoryController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,8 @@ Route::get('/user', function () {
     return view('form');
 });
 
+Route::post('/social-posts/update-status', [SocialPostController::class, 'updateStatus']);
+
 
 Route::prefix('admin')->name('admin.')->group(function () {
     $routes = [
@@ -26,7 +30,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         ['prefix' => 'user', 'name' => 'user.', 'controller' => UserController::class],
         ['prefix' => 'level', 'name' => 'level.', 'controller' => LevelController::class],
         ['prefix' => 'profile', 'name' => 'profile.', 'controller' => ProfileController::class],
-        ['prefix' => 'social-post', 'name' => 'social-post.', 'controller' => SocialPostCommentController::class],
+        ['prefix' => 'social-post', 'name' => 'social-post.', 'controller' => SocialPostController::class],
         ['prefix' => 'lesson-history', 'name' => 'lesson-history.', 'controller' => LessonHistoryController::class],
         ['prefix' => 'lesson', 'name' => 'lesson.', 'controller' => LessonController::class],
         ['prefix' => 'social-post-like', 'name' => 'social-post-like.', 'controller' => SocialPostLikeController::class],
