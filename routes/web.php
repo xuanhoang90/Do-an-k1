@@ -4,11 +4,11 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SocialPostController;
 use App\Http\Controllers\Admin\SocialPostCommentController;
 use App\Http\Controllers\Admin\SocialPostLikeController;
-use App\Http\Controllers\Admin\SocialPostController;
 use App\Http\Controllers\Admin\LessonHistoryController;
-use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Middleware\CheckLogin;
@@ -63,6 +63,7 @@ Route::prefix('admin')->name('admin.')->middleware(\App\Http\Middleware\CheckLog
         Route::get('edit/{id}', 'edit')->name('edit');
         Route::post('update/{id}', 'update')->name('update');
         Route::get('destroy/{id}', 'destroy')->name('destroy');
+        Route::post('update-status', [SocialPostController::class, 'updateStatus']);
     });
 
     Route::prefix('social_post_comment')->name('social_post_comment.')->controller(SocialPostCommentController::class)->group(function () {
@@ -112,5 +113,5 @@ Route::prefix('admin')->name('admin.')->middleware(\App\Http\Middleware\CheckLog
 });
 
 Route::get('/{any}', function(){
-    return abort(404);
+    return view('frontend.app');
 })->where('any', '.*');

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Models\Admin\SocialPost;
+use App\Models\Admin\LessonHistory;
+use App\Models\Admin\User;
+
 
 class SocialPostController
 {
@@ -11,7 +15,11 @@ class SocialPostController
      */
     public function index()
     {
-        //
+
+        $social_post = SocialPost::with('lesson_history','user')->get();
+        return view('modules.social.index', [
+            'social_post' => $social_post,
+        ]);
     }
 
     /**
@@ -49,9 +57,18 @@ class SocialPostController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateStatus(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'id' => 'required|exists:social_posts,id',
+            'status' => 'required|in:1,2', // Kiểm tra status là 1 hoặc 2
+        ]);
+    
+        $post = SocialPost::find($validated['id']);
+        $post->status = $validated['status']; // Cập nhật status
+        $post->save();
+    
+        return response()->json(['success' => true]);
     }
 
     /**
