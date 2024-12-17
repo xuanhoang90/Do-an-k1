@@ -70,26 +70,9 @@
 </head>
 
 <body class="app">
-  <!-- @TOC -->
-  <!-- =================================================== -->
-  <!--
-      + @Page Loader
-      + @App Content
-          - #Left Sidebar
-              > $Sidebar Header
-              > $Sidebar Menu
-
-          - #Main
-              > $Topbar
-              > $App Screen Content
-    -->
-
-  <!-- @Page Loader -->
-  <!-- =================================================== -->
   <div id='loader'>
     <div class="spinner"></div>
   </div>
-
 
   <script>
     window.addEventListener('load', function load() {
@@ -100,9 +83,6 @@
     });
   </script>
 
-  <!-- @App Content -->
-
-  <!-- =================================================== -->
   <div>
     <!-- #Left Sidebar ==================== -->
     <div class="sidebar">
@@ -121,10 +101,6 @@
       <!-- ### $Topbar ### -->
       @include('partials.main-header')
 
-      <!-- ### $App Screen Content ### -->
-
-
-
       <main class="main-content bgc-grey-100">
         <div id="mainContent">
           <div class="container-fluid">
@@ -137,13 +113,6 @@
         </div>
         </main>
 
-
-
-
-
-
-
-        <!-- ### $App Screen Footer ### -->
         <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
           <span>Copyright © 2024 Designed by <a href="https://colorlib.com" target="_blank" rel="nofollow noopener noreferrer" title="Colorlib">Colorlib</a>. All rights reserved.</span>
         </footer>

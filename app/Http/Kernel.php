@@ -55,7 +55,7 @@ class Kernel extends HttpKernel
         'precognitive' => \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'check_login' => \App\Http\Middleware\CheckLogin::class,
+        'admin-middleware' => \App\Http\Middleware\AdminMiddleware::class,
     ];
     
 }

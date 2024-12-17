@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\SocialPostLikeController;
 use App\Http\Controllers\Admin\LessonHistoryController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\Logout;
-use App\Http\Middleware\CheckLogin;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin', function(){
@@ -22,7 +22,7 @@ Route::get('/admin/login', [LoginController::class, 'ShowLogin']);
 Route::post('/admin/login', [LoginController::class, 'Login'])->name('login');
 Route::get('/admin/logout', Logout::class)->name('logout');
 
-Route::prefix('admin')->name('admin.')->middleware(\App\Http\Middleware\CheckLogin::class)->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->group(function () {
 
     Route::get('home', function(){
         return view('admin');

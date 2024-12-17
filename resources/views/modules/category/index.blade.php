@@ -1,11 +1,8 @@
 @extends('admin')
 
-
-
 @section('title', 'List')
 @section('name', 'Category')
 @section('app-content')
-
 
 <div class="row">
     <div class="col-md-12">
@@ -185,7 +182,4 @@
         $(`#${formId} .invalid-feedback`).text('').hide();
     }
 </script>
-
-
-
 @endsection
