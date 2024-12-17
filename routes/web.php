@@ -14,19 +14,18 @@ use App\Http\Controllers\Auth\Logout;
 use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function(){
-    return redirect('/login');
+Route::get('/admin', function(){
+    return redirect('/admin/login');
 });
 
-Route::get('/login', [LoginController::class, 'ShowLogin']);
-Route::post('/login', [LoginController::class, 'Login'])->name('login');
-
-Route::get('/logout', Logout::class)->name('logout');
+Route::get('/admin/login', [LoginController::class, 'ShowLogin']);
+Route::post('/admin/login', [LoginController::class, 'Login'])->name('login');
+Route::get('/admin/logout', Logout::class)->name('logout');
 
 Route::prefix('admin')->name('admin.')->middleware(\App\Http\Middleware\CheckLogin::class)->group(function () {
 
     Route::get('home', function(){
-        return view('form');
+        return view('admin');
     })->name('home');
 
     Route::prefix('user')->name('user.')->controller(UserController::class)->group(function () {

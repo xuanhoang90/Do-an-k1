@@ -1,4 +1,4 @@
-@extends('form')
+@extends('admin')
 
 @section('title', 'List')
 @section('name', 'User')

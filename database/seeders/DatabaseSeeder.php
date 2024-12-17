@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            Lession_HistorySeeder::class,
-            Social_PostSeeder::class,
+            // Lession_HistorySeeder::class,
+            // Social_PostSeeder::class,
         ]);
     }
 }
