@@ -1,7 +1,5 @@
 @extends('form')
 
-
-
 @section('title', 'List')
 @section('name', 'User')
 @section('app-content')

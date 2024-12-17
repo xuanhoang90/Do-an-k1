@@ -9,14 +9,25 @@ use App\Http\Controllers\Admin\SocialPostLikeController;
 use App\Http\Controllers\Admin\SocialPostController;
 use App\Http\Controllers\Admin\LessonHistoryController;
 use App\Http\Controllers\Admin\ProfileController;
-
-
-
-
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\Logout;
+use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::get('/', function(){
+    return redirect('/login');
+});
 
+Route::get('/login', [LoginController::class, 'ShowLogin']);
+Route::post('/login', [LoginController::class, 'Login'])->name('login');
+
+Route::get('/logout', Logout::class)->name('logout');
+
+Route::prefix('admin')->name('admin.')->middleware(\App\Http\Middleware\CheckLogin::class)->group(function () {
+
+    Route::get('home', function(){
+        return view('form');
+    })->name('home');
 
     Route::prefix('user')->name('user.')->controller(UserController::class)->group(function () {
         Route::get('index', 'index')->name('index');
