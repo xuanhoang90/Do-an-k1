@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin\Level;
 use App\Models\Admin\Lesson;
+use App\Models\Admin\Category;
 
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class LessonController
     {
         $lessons = Lesson::with('level')->get();
         $levels = Level::all();
-        return view('modules.lesson.index', compact('lessons', 'levels'));
+        $categories = Category::all();
+        return view('modules.lesson.index', compact('lessons', 'levels','categories'));
     }
 
     /**
@@ -24,7 +26,11 @@ class LessonController
      */
     public function create()
     {
-        //
+        $levels = Level::all();
+        $categories = Category::all();
+      
+        return view('modules.lesson.create', compact('levels','categories'));
+
     }
 
     /**
@@ -32,6 +38,8 @@ class LessonController
      */
     public function store(Request $request)
     {
+
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'content' => 'required',
@@ -56,7 +64,7 @@ class LessonController
                     $sampleImages[] = $path;
                 }
             }
-
+            
             Lesson::create([
                 'name' => $validated['name'],
                 'content' => $validated['content'],
@@ -64,8 +72,11 @@ class LessonController
                 'thumbnail' => $thumbnail,
                 'sample_image' => json_encode($sampleImages),
                 'status' => $validated['status'],
-
+                'level_id' => 1,
+                'category_id' => $request->category_id,
             ]);
+
+          
             return redirect()
                 ->route('admin.lesson.index')
                 ->with('success', 'Lesson created successfully!');
@@ -83,11 +94,13 @@ class LessonController
      * Show the form for editing the specified resource.
      */
     public function edit($id)
-    {
-        $lesson = Lesson::with('level')->findOrFail($id);
+{
+    $lesson = Lesson::with(['category', 'level'])->findOrFail($id);
+    $categories = Category::all(); // Lấy danh sách categories
+    $levels = Level::all();        // Lấy danh sách levels
 
-        return view('modules.lession.edit', compact('lesson', 'levels'));
-    }
+    return view('modules.lesson.edit', compact('lesson', 'categories', 'levels'));
+}
 
     /**
      * Update the specified resource in storage.

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->tinyInteger('type')->default(1)->comment('1-Admin : 2-Study');
             $table->tinyInteger('status')->default(1)->comment('1-Active : 2-Banned');
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
+            // $table->unsignedBigInteger('created_by')->nullable();
+            // $table->unsignedBigInteger('updated_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

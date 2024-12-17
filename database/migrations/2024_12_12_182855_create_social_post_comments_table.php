@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('content');
             $table->tinyInteger('status')->default(1)->comment('1-Show : 2-Hide');
             $table->timestamps();
-            $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('updated_by');
+            // $table->unsignedBigInteger('created_by');
+            // $table->unsignedBigInteger('updated_by');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('social_post_id')->references('id')->on('social_posts')->onDelete('cascade');
             $table->foreign('parent_id')->references('id')->on('social_post_comments')->onDelete('cascade');

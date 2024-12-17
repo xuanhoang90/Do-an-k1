@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SocialPostLikeController;
 use App\Http\Controllers\Admin\SocialPostController;
 use App\Http\Controllers\Admin\LessonHistoryController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\NationalController;
 
 
 
@@ -19,6 +20,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
     Route::prefix('user')->name('user.')->controller(UserController::class)->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        Route::post('store', 'store')->name('store');
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::post('update/{id}', 'update')->name('update');
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
+    });
+
+    Route::prefix('national')->name('national.')->controller(NationalController::class)->group(function () {
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
