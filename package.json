@@ -38,9 +38,13 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@vitejs/plugin-react": "^4.3.4",
         "datatables.net": "^2.1.8",
         "datatables.net-bs5": "^2.1.8",
         "datatables.net-dt": "^2.1.8",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-router-dom": "^7.0.2",
         "sass-embedded": "^1.82.0"
     }
 }

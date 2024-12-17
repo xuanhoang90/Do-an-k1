@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin\Profile;
+use App\Models\Admin\User;
 use Illuminate\Http\Request;
 
 class ProfileController
@@ -11,7 +13,11 @@ class ProfileController
      */
     public function index()
     {
-        //
+        $user = User::all();
+        dd($user);
+        // return view('modules.profile.index', [
+        //     'profile' => $profile
+        // ]);
     }
 
     /**
@@ -41,9 +47,11 @@ class ProfileController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        //
+        $profile = Profile::find($id);  // Lấy thông tin profile
+        // $user = $profile->user; 
+        return view('profile.edit', compact('profile'));
     }
 
     /**
@@ -51,7 +59,26 @@ class ProfileController
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'phone_number' => 'required|string|max:20',
+            'level_id' => 'required|exists:levels,id',
+            'avatar' => 'nullable|image|max:2048',
+        ]);
+
+        $profile = Profile::find($id);  // Lấy thông tin profile
+        $user = $profile->user;
+
+        $profile->phone_number = $request->phone_number;
+        $profile->level_id = $request->level_id;
+
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $profile->avatar = $avatarPath;
+        }
+
+        $profile->save();
+
+        return redirect()->route('profile.edit')->with('success', 'Profile updated successfully');
     }
 
     /**

@@ -17,50 +17,15 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(
             [
                 [
-                    'name' => 'Châu Thục Khuên',
-                    'email' => 'chauthuckhue@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'type' => 1,
-                    'status' => 1,
-
+                    'name' => 'Thanh vien 01',
+                    'email' => 'thanhvien01@gmail.com',
+                    'password' => Hash::make('123456'),
                 ],
                 [
-                    'name' => 'Huỳnh Thanh Hà',
-                    'email' => 'huynhthanhha@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'type' => 1,
-                    'status' => 1,
+                    'name' => 'Thanh vien 02',
+                    'email' => 'thanhvien02@gmail.com',
+                    'password' => Hash::make('456789'),
                 ],
-                [
-                    'name' => 'Trần Tú Trân',
-                    'email' => 'trantutran@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'type' => 2,
-                    'status' => 1,
-
-                ],
-                [
-                    'name' => 'Võ Khánh An',
-                    'email' => 'vokhanhan@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'type' => 2,
-                    'status' => 1,
-                ],
-                [
-                    'name' => 'Nguyễn Ái Như',
-                    'email' => 'nguyenainhu@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'type' => 2,
-                    'status' => 1,
-                ],
-                [
-                    'name' => 'Lê Hoàng Diệp',
-                    'email' => 'lehoangdiep@gmail.com',
-                    'password' => Hash::make('12345678'),
-                    'type' => 2,
-                    'status' => 1,
-                ]
-                
             ]
         );
     }

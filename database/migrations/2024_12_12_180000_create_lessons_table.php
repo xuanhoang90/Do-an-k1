@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->string('sample_image');
             $table->tinyInteger('status')->default(1);
-            $table->unsignedBigInteger('level_id');
+            $table->unsignedBigInteger('level_id')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
