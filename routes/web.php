@@ -8,10 +8,24 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SocialPostCommentController;
 use App\Http\Controllers\Admin\SocialPostLikeController;
 use App\Http\Controllers\Admin\LessonHistoryController;
-
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\Logout;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::get('/', function(){
+    return redirect('/login');
+});
+
+Route::get('/login', [LoginController::class, 'ShowLogin'])->name('ShowLogin');
+Route::post('/login', [LoginController::class, 'Login'])->name('login');
+
+Route::get('/logout', Logout::class)->name('logout');
+
+
+Route::prefix('admin')->name('admin.')->middleware(\App\Http\Middleware\CheckLogin::class)->group(function () {
+    Route::get('home', function() {
+        return view('form');
+    })->name('home');
     $routes = [
         ['prefix' => 'category', 'name' => 'category.', 'controller' => CategoryController::class],
         ['prefix' => 'user', 'name' => 'user.', 'controller' => UserController::class],
@@ -39,6 +53,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     }
 });
 
-Route::get('/{any}', function () {
-    return view('frontend.app'); // File Blade chứa React app
+Route::get('/{any}', function(){
+    return abort(404);
 })->where('any', '.*');

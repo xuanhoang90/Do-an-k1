@@ -12,7 +12,7 @@ class CategoryController
      */
     public function index(Request $request)
     {
-       return view('modules.category.index');
+    //    return view('modules.category.index');
     }
 
     /**

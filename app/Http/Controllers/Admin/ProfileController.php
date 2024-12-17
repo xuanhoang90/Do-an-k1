@@ -11,7 +11,7 @@ class ProfileController
      */
     public function index()
     {
-        //
+        return view('modules.profile.index');
     }
 
     /**
