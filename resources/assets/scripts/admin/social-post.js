@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const status = this.checked ? 1 : 2;
 
           // Gửi yêu cầu AJAX tới server
-          fetch('/social-posts/update-status', {
+          fetch('/admin/social_post/update-status', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
