@@ -11,20 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('social_posts', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('student_lesson_history_id');
-            $table->string('title');
-            $table->text('content')->nullable();
+            $table->string('name');
+            $table->string('description');
+            $table->string('thumbnail')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1-Show : 2-Hide');
-
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
-
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('student_lesson_history_id')->references('id')->on('student_lesson_histories');
         });
     }
 
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('social_posts');
+        Schema::dropIfExists('categories');
     }
 };

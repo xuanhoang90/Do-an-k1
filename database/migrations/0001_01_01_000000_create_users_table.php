@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->tinyInteger('type')->default(1)->comment('1-Admin : 2-Study');
+            $table->tinyInteger('type')->default(1)->comment('1-Admin : 2-student');
             $table->tinyInteger('status')->default(1)->comment('1-Active : 2-Banned');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
