@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @vite(['resources/assets/styles/index.scss', 'resources/assets/scripts/index.js'])
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.css">
   </head>
   <body class="app">
     @include('admin.commons.loader')
@@ -27,4 +28,8 @@
       </div>
     </div>
   </body>
+
+  <script src="https://cdn.ckeditor.com/ckeditor5/44.1.0/ckeditor5.umd.js"></script>
+
+  @yield('scripts')
 </html>

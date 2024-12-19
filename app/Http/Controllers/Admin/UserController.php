@@ -15,9 +15,17 @@ class UserController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('id', 'desc')->with(['profile'])->get();
+        $query = User::orderBy('id', 'desc')->with(['profile']);
+
+        if ($request->has('q')) {
+            $query->where('name', 'LIKE', "%{$request->get('q')}%")
+                ->orWhere('email', 'LIKE', "%{$request->get('q')}%");
+        }
+
+        $users = $query->get();
+
         return view('admin.user.index', compact('users'));
     }
 
