@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('social_post_likes', function (Blueprint $table) {
+        Schema::create('nationals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('social_post_id');
-
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('social_post_id')->references('id')->on('social_posts');
+            $table->string('name');
+            $table->string('english_name')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('language_code')->nullable();
+            $table->string('flag')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('social_post_likes');
+        Schema::dropIfExists('nationals');
     }
 };
