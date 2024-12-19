@@ -15,6 +15,9 @@ class User extends Authenticatable
     const TYPE_ADMIN = 1;
     const TYPE_STUDENT = 2;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -68,6 +71,23 @@ class User extends Authenticatable
 
     public function getStatusName(): string
     {
-        return $this->status == 1 ? 'Active' : 'Banned';
+        return $this->status == self::STATUS_ACTIVE ? 'Active' : 'Banned';
+    }
+
+    public function isActive()
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function blockUser()
+    {
+        $this->status = self::STATUS_INACTIVE;
+        $this->save();
+    }
+
+    public function unblockUser()
+    {
+        $this->status = self::STATUS_ACTIVE;
+        $this->save();
     }
 }

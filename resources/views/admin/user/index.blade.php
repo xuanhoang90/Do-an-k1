@@ -9,6 +9,9 @@
     <div class="col-md-12">
       <div class="bgc-white bd bdrs-3 p-20 mB-20">
         <h4 class="c-grey-900 mB-20">Danh sach user</h4>
+
+        <a class="btn btn-success" href="{{ route('admin.user.create') }}">Create user</a>
+
         <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
               <tr>
@@ -41,12 +44,11 @@
             </tfoot>
             <tbody>
 
-              {
                 @foreach ($users as $user)
 
                   <tr>
                     <td>{{ $user->id }}</td>
-                    <td><img src="{{ $user->profile->avatar }}" width="100" /></td>
+                    <td><img src="{{ asset('storage/' . $user->profile->avatar) }}" width="100" /></td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->profile?->display_name ?? 'No name' }}</td>
@@ -55,13 +57,16 @@
                     <td>{{ $user->getUserTypeName() }}</td>
                     <td>{{ $user->getStatusName() }}</td>
                     <td>
-                      <button type="button" class="btn cur-p btn-primary btn-color">View</button>
-                      <button type="button" class="btn cur-p btn-info btn-color">Edit</button>
-                      <button type="button" class="btn cur-p btn-danger btn-color">Ban</button>
+                      {{-- <button type="button" class="btn cur-p btn-primary btn-color">View</button> --}}
+                      <a class="btn cur-p btn-info btn-color" href="{{ route('admin.user.edit', $user->id) }}">Edit</a>
+                      @if($user->isActive())
+                        <a class="btn cur-p btn-danger btn-color" href="{{ route('admin.user.block-user', $user->id) }}" onclick="confirm('Are you sure?')">Block user</button>
+                      @else
+                        <a class="btn cur-p btn-info btn-color" href="{{ route('admin.user.unblock-user', $user->id) }}" onclick="confirm('Are you sure?')">Unblock user</button>
+                      @endif
                     </td>
                   </tr>
                 @endforeach
-              }
               
             </tbody>
           </table>

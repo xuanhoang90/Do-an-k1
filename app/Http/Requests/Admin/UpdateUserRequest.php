@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +22,14 @@ class CreateUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('id');
         return [
-            'email' => 'required|email|unique:users,email', // Validate email format and uniqueness
-            'name' => 'required|string|max:255', // Validate email format and uniqueness
-            'password' => 'required|confirmed|min:8', // Validate password with a minimum length of 8
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($userId), // Validate email format and uniqueness, excluding the current user's ID
+            ], // Validate email format and uniqueness
+            'name' => 'required|string|max:255',
             'national_id' => 'required|integer|exists:nationals,id', // Validate national (e.g., nationality) as a string
             'level_id' => 'required|integer|exists:levels,id', // Validate level (1, 2, or 3)
             'address' => 'nullable|string|max:255', // Validate address as a string (nullable)

@@ -1,3 +1,7 @@
+<?php
+use Illuminate\Support\Str;
+?>
+
 <div class="sidebar">
   <div class="sidebar-inner">
     <!-- ### $Sidebar Header ### -->
@@ -38,7 +42,7 @@
         </a>
       </li>
 
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown {{ Str::contains(url()->current(), '/admin/user/') ? 'open' : '' }}">
         <a class="dropdown-toggle" href="javascript:void(0);">
           <span class="icon-holder">
             <i class="c-orange-500 ti-layout-list-thumb"></i>
@@ -57,7 +61,47 @@
           </li>
         </ul>
       </li>
+
+      <li class="nav-item dropdown {{ Str::contains(url()->current(), '/admin/category/') ? 'open' : '' }}">
+        <a class="dropdown-toggle" href="javascript:void(0);">
+          <span class="icon-holder">
+            <i class="c-orange-500 ti-layout-list-thumb"></i>
+          </span>
+          <span class="title">Category</span>
+          <span class="arrow">
+            <i class="ti-angle-right"></i>
+          </span>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a class='sidebar-link' href="{{ route('admin.category.index') }}">Danh sach category</a>
+          </li>
+          <li>
+            <a class='sidebar-link' href="{{ route('admin.category.create') }}">Create category</a>
+          </li>
+        </ul>
       </li>
+
+      <li class="nav-item dropdown {{ Str::contains(url()->current(), '/admin/level/') ? 'open' : '' }}">
+        <a class="dropdown-toggle" href="javascript:void(0);">
+          <span class="icon-holder">
+            <i class="c-orange-500 ti-layout-list-thumb"></i>
+          </span>
+          <span class="title">Level</span>
+          <span class="arrow">
+            <i class="ti-angle-right"></i>
+          </span>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a class='sidebar-link' href="{{ route('admin.level.index') }}">Danh sach level</a>
+          </li>
+          <li>
+            <a class='sidebar-link' href="{{ route('admin.level.create') }}">Create level</a>
+          </li>
+        </ul>
+      </li>
+
     </ul>
   </div>
 </div>
