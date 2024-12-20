@@ -57,6 +57,9 @@ use Illuminate\Support\Str;
             <a class='sidebar-link' href="{{ route('admin.user.index') }}">Danh sach user</a>
           </li>
           <li>
+            <a class='sidebar-link' href="{{ route('admin.user.index') }}?type=2">Danh sach hoc vien</a>
+          </li>
+          <li>
             <a class='sidebar-link' href="{{ route('admin.user.create') }}">Create user</a>
           </li>
         </ul>

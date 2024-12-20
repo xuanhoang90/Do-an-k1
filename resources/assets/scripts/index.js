@@ -18,3 +18,4 @@ import './email';
 import './googleMaps';
 import './utils';
 import './admin/common';
+import './admin/ckeditor-config';

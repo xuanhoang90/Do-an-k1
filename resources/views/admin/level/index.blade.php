@@ -18,6 +18,8 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Number of students</th>
+                <th>Number of lessons</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -27,6 +29,8 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Number of students</th>
+                <th>Number of lessons</th>
                 <th>Action</th>
               </tr>
             </tfoot>
@@ -38,6 +42,8 @@
                     <td>{{ $level->id }}</td>
                     <td>{{ $level->name }}</td>
                     <td>{{ $level->description }}</td>
+                    <td>{{ $level->students()->count() }}</td>
+                    <td>{{ $level->lessons()->count() }}</td>
                     <td>
                       <a class="btn cur-p btn-info btn-color" href="{{ route('admin.level.edit', $level->id) }}">Edit</a>
                     </td>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Auth\LoginController;
@@ -109,6 +110,8 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
         Route::post('update/{id}', 'update')->name('update');
         // Route::get('destroy/{id}', 'destroy')->name('destroy');
     });
+
+    Route::post('/upload-image', [ImageController::class, 'upload'])->name('image.upload');
 });
 
 Route::get('/{any}', function(){

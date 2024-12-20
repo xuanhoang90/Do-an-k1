@@ -24,6 +24,10 @@ class UserController
                 ->orWhere('email', 'LIKE', "%{$request->get('q')}%");
         }
 
+        if ($request->has('type')) {
+            $query->where('type', $request->get('type'));
+        }
+
         $users = $query->get();
 
         return view('admin.user.index', compact('users'));
@@ -58,7 +62,6 @@ class UserController
                 $imageName = time() . '.' . $image->getClientOriginalExtension(); // Đặt tên file
                 $avatarPath = $image->storeAs('avatars', $imageName, 'public');
             }
-    
 
             $profile = new Profile();
             $profile->user_id = $user->id;

@@ -15,9 +15,17 @@ class LessonController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lessons = Lesson::orderBy('id', 'desc')->get();
+        $query = Lesson::orderBy('id', 'desc');
+
+        if ($request->has('q')) {
+            $query->where('title', 'LIKE', "%{$request->get('q')}%")
+                ->orWhere('short_description', 'LIKE', "%{$request->get('q')}%");
+        }
+
+        $lessons = $query->get();
+
         return view('admin.lesson.index', compact('lessons'));
     }
 

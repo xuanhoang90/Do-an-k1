@@ -11,9 +11,16 @@ class CategoryController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::orderBy('id', 'desc')->get();
+        $query = Category::orderBy('id', 'desc');
+
+        if ($request->has('q')) {
+            $query->where('name', 'LIKE', "%{$request->get('q')}%")
+                ->orWhere('description', 'LIKE', "%{$request->get('q')}%");
+        }
+
+        $categories = $query->get();
         return view('admin.category.index', compact('categories'));
     }
 
