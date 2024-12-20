@@ -9,7 +9,7 @@ export default function Content() {
       <div className="col-lg-6 col-md-6" key={i}>
         <div className="blog-singele-box">
           <div className="blog-thumb">
-            <img src="theme/images/caligraphy/5.jpg" alt="blog" />
+            <img src="/theme/images/caligraphy/5.jpg" alt="blog" />
             <div className="blog-content">
               <div className="blog-date">
                 <span>June 8, 2024</span>
@@ -124,7 +124,7 @@ export default function Content() {
                     </div>
                     <div className="sidber-widget-recent-post">
                       <div className="recent-widget-thumb">
-                        <img src="theme/images/inner/recent-post.png" alt="" />
+                        <img src="/theme/images/inner/recent-post.png" alt="" />
                       </div>
                       <div className="recent-widget-content">
                         <a href="blog-details.html">
@@ -135,7 +135,7 @@ export default function Content() {
                     </div>
                     <div className="sidber-widget-recent-post">
                       <div className="recent-widget-thumb">
-                        <img src="theme/images/inner/recent-post2.png" alt="" />
+                        <img src="/theme/images/inner/recent-post2.png" alt="" />
                       </div>
                       <div className="recent-widget-content">
                         <a href="blog-details.html">
@@ -146,7 +146,7 @@ export default function Content() {
                     </div>
                     <div className="sidber-widget-recent-post">
                       <div className="recent-widget-thumb">
-                        <img src="theme/images/inner/recent-post3.png" alt="" />
+                        <img src="/theme/images/inner/recent-post3.png" alt="" />
                       </div>
                       <div className="recent-widget-content">
                         <a href="blog-details.html">

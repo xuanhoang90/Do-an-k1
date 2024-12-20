@@ -148,7 +148,10 @@ ClassicEditor
     'outdent',
     'indent'
   ],
-  extraPlugins: [MyCustomUploadAdapterPlugin]
+  extraPlugins: [MyCustomUploadAdapterPlugin],
+  mediaEmbed: {
+    provider: 'youtube',
+  }
 } )
 .then( editor => {
   window.editor = editor;

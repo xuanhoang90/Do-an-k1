@@ -9,8 +9,7 @@ ADMIN:
 - quan ly cap do -> DONE
 - quan ly danh muc -> DONE
 - quan ly bai hoc -> done
-- quan ly mang xa hoi
-- dashboard
+- dashboard -> DONE
 
 CLIENT:
 
@@ -22,3 +21,9 @@ CLIENT:
 - history
 - social
 - comment
+
+----
+- quan ly mang xa hoi
+
+issues:
+- embed youtube video
