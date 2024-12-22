@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import useFetch from "../../hooks/useFetch";
 
 export default function Header(options) {
-    const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
     const handleLogout = () => {
         dispatch(logout());

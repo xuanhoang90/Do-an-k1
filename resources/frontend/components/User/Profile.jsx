@@ -4,7 +4,6 @@ import Footer from "../Commons/Footer";
 import useFetch from "../../hooks/useFetch";
 
 export default function Profile(props) {
-  const [loading, setLoading] = useState(true);
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
 
