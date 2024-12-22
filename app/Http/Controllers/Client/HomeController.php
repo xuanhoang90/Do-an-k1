@@ -12,7 +12,7 @@ class HomeController
 {
     public function getCategories()
     {
-        return response()->json(Category::orderBy('id', 'desc')->all());
+        return response()->json(Category::orderBy('id', 'desc')->get());
     }
 
     public function getNationals()
@@ -36,5 +36,31 @@ class HomeController
         $lesson->thumbnail = config('app.url') .'/storage/'. $lesson->thumbnail;
 
         return response()->json($lesson);
+    }
+
+    public function getLessons(Request $request)
+    {
+        $query = Lesson::query();
+
+        if ($request->has('language')) {
+            $national = National::where(['slug' => $request->get('language')])->first();
+            $query->where('national_id', $national->id);
+        }
+
+        if ($request->has('category')) {
+            $query->where('category_id', $request->get('category'));
+        }
+
+        if ($request->has('level')) {
+            $query->where('level_id', $request->get('level'));
+        }
+
+        $lessons = $query->orderBy('id', 'desc')->paginate(10);
+
+        foreach ($lessons as $lesson) {
+            $lesson->thumbnail = config('app.url') .'/storage/'. $lesson->thumbnail;
+        }
+
+        return response()->json($lessons);
     }
 }

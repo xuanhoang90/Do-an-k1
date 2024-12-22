@@ -74,12 +74,15 @@ Route::prefix('api')->group(function () {
     Route::get('/get-nationals', [HomeController::class, 'getNationals']);
     Route::get('/get-levels', [HomeController::class, 'getLevels']);
     Route::get('/get-lesson/{slug}', [HomeController::class, 'getLessonData']);
+    Route::get('/get-lessons', [HomeController::class, 'getLessons']);
 
     Route::post('/user/login', [AuthController::class, 'login'])->name('user.login');
     Route::post('/user/logout', [AuthController::class, 'logout'])->name('user.logout');
+    Route::post('/user/register', [AuthController::class, 'register'])->name('user.register');
 
     Route::prefix('user')->name('user.')->middleware('auth:sanctum')->group(function() {
         Route::get('/user-info', [AuthController::class, 'getUserInfo'])->name('userInfo');
+        Route::post('/update', [AuthController::class, 'update'])->name('update');
     });
 });
 

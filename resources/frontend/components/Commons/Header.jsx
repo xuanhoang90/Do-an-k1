@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { logout } from '../../features/auth/authSlice';
-import { useDispatch } from 'react-redux';
 import useFetch from "../../hooks/useFetch";
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Header(options) {
     const dispatch = useDispatch();
@@ -10,6 +10,7 @@ export default function Header(options) {
         dispatch(logout());
     };
 
+    const { token } = useSelector((state) => state.auth);
     const nationals = useFetch('get-nationals')
 
     return (
@@ -105,9 +106,23 @@ export default function Header(options) {
                             </nav>
                         </div>
                         <div className="col-lg-2">
-                            <div className="header-btn">
-                                <a href="#" onClick={handleLogout}>Logout</a>
-                            </div>
+
+                            {
+                                token && (
+                                    <div className="header-btn">
+                                        <a href="#" onClick={handleLogout}>Logout</a>
+                                    </div>
+                                )
+                            }
+
+                            {
+                                !token && (
+                                    <div className="header-btn">
+                                        <Link to={'/user/login'}>Login</Link>
+                                    </div>
+                                )
+                            }
+                            
                         </div>
                     </div>
                 </div>

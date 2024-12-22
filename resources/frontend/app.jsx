@@ -12,6 +12,7 @@ import { store } from './app/store';
 import ProtectedRoute from './components/ProtectedRoute';
 import Loading from "./components/Commons/Loading";
 import AppContext from "./utils/AppContext";
+import Register from "./components/User/Register";
 
 function Blog() {
     return <h1>Blog Page</h1>;
@@ -28,9 +29,12 @@ function App() {
 
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/blog/:slug" element={<Category />} />
-                    <Route path="/lesson" element={<Lesson />} />
+                    <Route path="/blog/:language" element={<Category />} />
+                    <Route path="/blog/:language/:category" element={<Category />} />
+                    <Route path="/blog/:language/:category/:level" element={<Category />} />
+                    <Route path="/lesson/:slug" element={<Lesson />} />
                     <Route path="/user/login" element={<Login />} />
+                    <Route path="/user/register" element={<Register />} />
 
                     <Route path="/user/profile" element={
                         <ProtectedRoute>

@@ -2,14 +2,29 @@ import React, { useEffect, useState } from "react";
 import Header from "../commons/Header";
 import Footer from "../Commons/Footer";
 import useFetch from "../../hooks/useFetch";
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProfile, logout } from '../../features/auth/authSlice';
 
 export default function Profile(props) {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [nationality, setNationality] = useState(null);
+  const [level, setLevel] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const userData = useFetch('user/user-info')
   const nationals = useFetch('get-nationals')
   const levels = useFetch('get-levels')
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+      dispatch(logout());
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]; // Get the selected file
@@ -29,6 +44,28 @@ export default function Profile(props) {
     document.getElementById('profile-picture').click();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let data = await dispatch(updateProfile({
+      image,
+      name: name || userData.name,
+      phone: phone || userData.profile.phone_number,
+      address: address || userData.profile.address,
+      nationality: nationality || userData.profile.national_id,
+      level: level || userData.profile.level_id
+    }));
+
+    if (data.payload.errors) {
+      setErrors(data.payload.errors);
+    } else {
+      setErrors({});
+    }
+
+    if (data.payload.success) {
+      alert('Success')
+    }
+  };
+
     return (
         <>
           <Header />
@@ -43,7 +80,7 @@ export default function Profile(props) {
                         </div>
                         <div className="widget-category">
                             <ul>
-                            <li>
+                            <li className="active">
                                 <a href="#">
                                 Your profile
                                 <i className="bi bi-arrow-right" />
@@ -56,7 +93,7 @@ export default function Profile(props) {
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#" onClick={handleLogout}>
                                 Logout
                                 <i className="bi bi-arrow-right" />
                                 </a>
@@ -74,10 +111,8 @@ export default function Profile(props) {
                             <h4>Profile</h4>
                         </div>
                         <div className="widget-category">
-                            
-                            
                         
-                        <form>
+                        <form onSubmit={handleSubmit}>
                         {/* Profile Picture */}
                         <div className="mb-3 text-center">
                           <label htmlFor="profile-picture" className="form-label">
@@ -110,7 +145,8 @@ export default function Profile(props) {
                             className="form-control"
                             id="user-name"
                             placeholder="Enter your full name"
-                            value={ userData?.profile?.full_name }
+                            value={ userData?.profile?.display_name }
+                            onChange={(e) => setName(e.target.value)}
                           />
                         </div>
                         {/* Email */}
@@ -138,6 +174,7 @@ export default function Profile(props) {
                             id="user-phone"
                             placeholder="Enter your phone number"
                             value={ userData?.profile?.phone_number }
+                            onChange={(e) => setPhone(e.target.value)}
                           />
                         </div>
                         {/* Address */}
@@ -145,12 +182,14 @@ export default function Profile(props) {
                           <label htmlFor="user-address" className="form-label">
                             Address
                           </label>
-                          <textarea
+
+                          <input
+                            type="tel"
                             className="form-control"
                             id="user-address"
-                            rows={3}
                             placeholder="Enter your address"
                             value={ userData?.profile?.address }
+                            onChange={(e) => setAddress(e.target.value)}
                           />
                         </div>
                         {/* Nationality */}
@@ -158,7 +197,7 @@ export default function Profile(props) {
                           <label htmlFor="user-nationality" className="form-label">
                             Nationality
                           </label>
-                          <select className="form-select" id="user-nationality" value={ userData?.profile?.national_id }>
+                          <select className="form-select" id="user-nationality" value={ nationality || userData?.profile?.national_id } onChange={(e) => setNationality(e.target.value)}>
                             {
                               nationals && nationals.map((national) => (
                                 <option key={national.id} value={national.id}>
@@ -173,7 +212,7 @@ export default function Profile(props) {
                           <label htmlFor="user-level" className="form-label">
                             Level
                           </label>
-                          <select className="form-select" id="user-level" value={ userData?.profile?.level_id }>
+                          <select className="form-select" id="user-level" value={ level || userData?.profile?.level_id } onChange={(e) => setLevel(e.target.value)}>
                             {
                               levels && levels.map((level) => (
                                 <option key={level.id} value={level.id}>
@@ -185,9 +224,9 @@ export default function Profile(props) {
                         </div>
                         {/* Save Button */}
                         <div className="text-center">
-                          <button type="submit" className="btn btn-success">
-                            Save Changes
-                          </button>
+                          <div className="submit-button">
+                            <button type="submit">Update</button>
+                          </div>
                         </div>
                       </form>
                         
