@@ -4242,3 +4242,7 @@ p.details-desc,
     }
 }
 
+
+.profile-page label {
+    color: black;
+}

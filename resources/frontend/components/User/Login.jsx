@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../commons/Header";
 import Footer from "../Commons/Footer";
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login () {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { token, loading, error } = useSelector((state) => state.auth);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login({ email, password }));
+  };
+
+  useEffect(() => {
+    if (token) {
+      navigate('/'); // Redirect to home page after login
+    }
+  }, [token, navigate]);
+
   return (
     <>
       <Header />
@@ -53,7 +73,7 @@ export default function Login () {
                     role="tabpanel"
                     aria-labelledby="login-tab"
                   >
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div className="mb-3">
                         <label htmlFor="login-email" className="form-label">
                           Email address
@@ -64,6 +84,7 @@ export default function Login () {
                           className="form-control"
                           id="login-email"
                           placeholder="Enter email"
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                       <div className="mb-3">
@@ -76,6 +97,7 @@ export default function Login () {
                           className="form-control"
                           id="login-password"
                           placeholder="Enter password"
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
                       <div className="submit-button">

@@ -1,27 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { logout } from '../../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+import useFetch from "../../hooks/useFetch";
 
 export default function Header(options) {
-    const [nationals, setNationals] = useState([]);
     const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        dispatch(logout());
+    };
 
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/get-nationals')
-            .then((response) => {
-                if (!response.ok) {
-                throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setNationals(data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setError(error);
-                setLoading(false);
-            });
-    }, [])
+    const nationals = useFetch('get-nationals')
 
     return (
         <>
@@ -68,7 +58,7 @@ export default function Header(options) {
                                         </a>
                                         <ul className="sub-menu">
                                             {
-                                                nationals.map((national) => (
+                                                nationals && nationals.map((national) => (
                                                     <li key={national.id}>
                                                         <Link
                                                             to={`/blog/${national.slug}`}
@@ -117,7 +107,7 @@ export default function Header(options) {
                         </div>
                         <div className="col-lg-2">
                             <div className="header-btn">
-                                <a href="/user/login">Login</a>
+                                <a href="#" onClick={handleLogout}>Logout</a>
                             </div>
                         </div>
                     </div>

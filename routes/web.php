@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\LevelController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\Logout;
+use App\Http\Controllers\Client\AuthController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -71,7 +72,15 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
 Route::prefix('api')->group(function () {
     Route::get('/get-categories', [HomeController::class, 'getCategories']);
     Route::get('/get-nationals', [HomeController::class, 'getNationals']);
+    Route::get('/get-levels', [HomeController::class, 'getLevels']);
     Route::get('/get-lesson/{slug}', [HomeController::class, 'getLessonData']);
+
+    Route::post('/user/login', [AuthController::class, 'login'])->name('user.login');
+    Route::post('/user/logout', [AuthController::class, 'logout'])->name('user.logout');
+
+    Route::prefix('user')->name('user.')->middleware('auth:sanctum')->group(function() {
+        Route::get('/user-info', [AuthController::class, 'getUserInfo'])->name('userInfo');
+    });
 });
 
 Route::get('/{any}', function(){

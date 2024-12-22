@@ -1,22 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import useFetch from "../../../hooks/useFetch";
 
 export default function ContentLesson() {
-  const [lesson, setLesson] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/get-lesson/bai-hoc-1')
-      .then(response => response.json())
-      .then(data => {
-        setLesson(data)
-        setLoading(false)
-      })
-      .catch(error => {
-        console.error('Error:', error)
-        setLoading(false)
-      });
-  }, [])
+  const lesson = useFetch('get-lesson/bai-hoc-1')
 
   return (
     <>
@@ -29,7 +16,7 @@ export default function ContentLesson() {
                   <h5>POST NEWS</h5>
                 </div>
                 <div className="section-main-title cursor-scale">
-                  <h1>{ lesson.title }</h1>
+                  <h1>{ lesson?.title }</h1>
                 </div>
               </div>
             </div>
@@ -39,7 +26,7 @@ export default function ContentLesson() {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="blog-details-thumb">
-                  <img src={ lesson.thumbnail } alt="thumb" />
+                  <img src={ lesson?.thumbnail } alt="thumb" />
                   </div>
                   <div className="blog-details-content">
                     <div className="meta-blog">
@@ -52,9 +39,9 @@ export default function ContentLesson() {
                         02 Comments
                       </span>
                     </div>
-                    <h4 className="blog-details-title">{ lesson.title }</h4>
+                    <h4 className="blog-details-title">{ lesson?.title }</h4>
 
-                    <div dangerouslySetInnerHTML={{ __html: lesson.content }} />
+                    <div dangerouslySetInnerHTML={{ __html: lesson?.content }} />
                   </div>
                   <div className="blog-details-socila-box">
                     <div className="row align-items-center">
