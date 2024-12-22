@@ -21,6 +21,7 @@ class LoginController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'type' => User::TYPE_ADMIN,
+            'status' => User::STATUS_ACTIVE,
         ];
 
         if(Auth::attempt($credentials)){

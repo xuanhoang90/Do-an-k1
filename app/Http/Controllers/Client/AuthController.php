@@ -19,6 +19,7 @@ class AuthController
             'email' => $request->get('email'),
             'password' => $request->get('password'),
             'type' => User::TYPE_STUDENT,
+            'status' => User::STATUS_ACTIVE,
         ])) {
             $request->session()->regenerate();
 
