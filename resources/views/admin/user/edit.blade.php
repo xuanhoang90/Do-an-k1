@@ -17,7 +17,7 @@
           <div class="row">
             <div class="col-md-2">
               <figure class="figure block-preview-image">
-                <div style="width: 150px; height: 150px; overflow: hidden"><img src="{{ $user->profile->avatar ? asset('storage/' . $user->profile->avatar) : 'https://placehold.co/400x400' }}" id="preview" class="figure-img img-fluid rounded-circle w-100 h-100" alt="..."></div>
+                <div style="width: 150px; height: 150px; overflow: hidden"><img src="{{ $user->profile?->avatar ? asset('storage/' . $user->profile?->avatar) : 'https://placehold.co/400x400' }}" id="preview" class="figure-img img-fluid rounded-circle w-100 h-100" alt="..."></div>
                 <input type="file" style="display: none" name="avatar" id="imageInput" accept="image/*">
 
                 <hr/>

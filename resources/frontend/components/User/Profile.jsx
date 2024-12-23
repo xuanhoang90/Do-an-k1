@@ -123,7 +123,7 @@ export default function Profile(props) {
                               src={ preview ? preview : userData?.profile?.avatar }
                               alt="Profile Picture"
                               className="img-thumbnail mb-2"
-                              style={{ width: 150, height: 150 }}
+                              style={{ width: 150, height: 150, objectFit: 'cover' }}
                               onClick={handlePreviewClick}
                             />
                           </div>
