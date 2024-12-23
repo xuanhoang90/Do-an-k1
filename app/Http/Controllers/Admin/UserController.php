@@ -109,14 +109,19 @@ class UserController
         $user->save();
 
         if (!empty($user)) {
-            $avatarPath = $user->profile->avatar;
+            $profile = $user->profile;
+            if (empty($profile)) {
+                $profile = new Profile();
+                $profile->user_id = $user->id;
+            }
+
+            $avatarPath = $user->profile?->avatar;
             if ($request->hasFile('avatar')) {
                 $image = $request->file('avatar');
                 $imageName = time() . '.' . $image->getClientOriginalExtension(); // Đặt tên file
                 $avatarPath = $image->storeAs('avatars', $imageName, 'public');
             }
 
-            $profile = $user->profile;
             $profile->display_name = $user->name;
             $profile->address = $request->get('address');
             $profile->phone_number = $request->get('phone_number');

@@ -46,7 +46,7 @@
 
                   <tr>
                     <td>{{ $lesson->id }}</td>
-                    <td><img src="{{ asset('storage/' . $lesson->thumbnail) }}" width="100" /></td>
+                    <td><img src="{{ asset('storage/' . $lesson->thumbnail) }}" class="coverImage" /></td>
                     <td>{{ $lesson->title }}</td>
                     <td>{{ $lesson->short_description }}</td>
                     <td>{{ $lesson->level->name }}</td>

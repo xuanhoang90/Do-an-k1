@@ -40,7 +40,7 @@
 
                   <tr>
                     <td>{{ $category->id }}</td>
-                    <td><img src="{{ asset('storage/' . $category->thumbnail) }}" width="100" /></td>
+                    <td><img src="{{ asset('storage/' . $category->thumbnail) }}" class="coverImage" /></td>
                     <td>{{ $category->name }}</td>
                     <td>{{ $category->description }}</td>
                     <td>{{ $category->getStatusName() }}</td>
