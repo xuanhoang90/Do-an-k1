@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\CreateLessonRequest;
 use App\Models\Category;
 use App\Models\Lesson;
+use App\Models\LessonSample;
 use App\Models\Level;
 use App\Models\National;
 use Illuminate\Http\Request;
@@ -62,6 +63,8 @@ class LessonController
 
         $lesson->save();
 
+        $this->uploadSamples($lesson, $request);
+
         return redirect()->route('admin.lesson.index')->with('success', 'Lesson created successfully.');
     }
 
@@ -108,6 +111,8 @@ class LessonController
 
         $lesson->save();
 
+        $this->uploadSamples($lesson, $request);
+
         return redirect()->route('admin.lesson.index')->with('success', 'Lesson updated successfully.');
     }
 
@@ -117,5 +122,22 @@ class LessonController
     public function destroy(string $id)
     {
         //
+    }
+
+    private function uploadSamples(Lesson $lesson, Request $request)
+    {
+        if ($request->hasFile('samples')) {
+            $samples = $request->file('samples');
+
+            LessonSample::where(['lesson_id' => $lesson->id])->delete();
+
+            foreach ($samples as $sample) {
+                $samplePath = $sample->store('samples', 'public');
+                $lessonSample = new LessonSample();
+                $lessonSample->lesson_id = $lesson->id;
+                $lessonSample->thumbnail = $samplePath;
+                $lessonSample->save();
+            }
+        }
     }
 }

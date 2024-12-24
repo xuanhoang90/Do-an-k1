@@ -76,6 +76,28 @@
                 </div>
 
                 <div class="mb-3 col-md-12">
+                  <label class="form-label" for="inputEmail4">Sample images</label>
+                  <figure class="figure block-preview-image w-100 d-block mt-3">
+                    <div class="preview-container" id="previewContainer">
+                        <!-- Images preview will be shown here -->
+                        @if (count($lesson->lessonSamples) > 0)
+                          @foreach($lesson->lessonSamples as $sample)
+                            <img src="{{ asset('storage/' . $sample->thumbnail) }}" alt="...">
+                          @endforeach
+                        @else
+                          <img src="https://placehold.co/400x400"  alt="...">
+                        @endif
+                        
+                    </div>
+                    <input type="file" style="display: none" name="samples[]" id="imageInputs" multiple accept="image/*">
+    
+                    <hr/>
+    
+                    <figcaption class="figure-caption"><a class="btn btn-primary changeImageBtn">Upload samples</a></figcaption>
+                  </figure>
+                </div>
+
+                <div class="mb-3 col-md-12">
                   <label class="form-label" for="inputEmail4">Content</label>
                   <textarea name="content" class="form-control" id="editor">{{ old('content', $lesson->content) }}</textarea>
                 </div>

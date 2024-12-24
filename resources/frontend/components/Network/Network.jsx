@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../commons/Header";
+import Header from "../Commons/Header";
 import Footer from "../Commons/Footer";
 import Post from "./Partials/Post";
 

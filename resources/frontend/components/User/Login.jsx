@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../commons/Header";
+import Header from "../Commons/Header";
 import Footer from "../Commons/Footer";
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../features/auth/authSlice';

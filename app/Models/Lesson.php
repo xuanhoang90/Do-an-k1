@@ -11,6 +11,8 @@ class Lesson extends Model
     const STATUS_SHOW = 1;
     const STATUS_HIDE = 2;
 
+    public $samples;
+
     public function getStatusName()
     {
         $status = [
@@ -34,5 +36,10 @@ class Lesson extends Model
     public function level()
     {
         return $this->belongsTo(Level::class);
+    }
+
+    public function lessonSamples()
+    {
+        return $this->hasMany(LessonSample::class);
     }
 }

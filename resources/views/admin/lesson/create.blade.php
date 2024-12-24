@@ -16,8 +16,8 @@
 
           <div class="row">
             <div class="col-md-3">
-              <figure class="figure block-preview-image">
-                <div style="width: 150px; height: 150px; overflow: hidden"><img src="https://placehold.co/400x400" id="preview" class="figure-img img-fluid rounded-circle w-100 h-100" alt="..."></div>
+              <figure class="figure block-preview-image w-100 d-block">
+                <div style="width: 150px; height: 150px; overflow: hidden"><img src="https://placehold.co/400x400" id="preview" class="figure-img img-fluid rounded w-100 h-100" alt="..."></div>
                 <input type="file" style="display: none" name="thumbnail" id="imageInput" accept="image/*">
 
                 <hr/>
@@ -73,6 +73,21 @@
                       }
                     </select>
                   </div>
+                </div>
+
+                <div class="mb-3 col-md-12">
+                  <label class="form-label" for="inputEmail4">Sample images</label>
+                  <figure class="figure block-preview-image w-100 d-block mt-3">
+                    <div class="preview-container" id="previewContainer">
+                        <!-- Images preview will be shown here -->
+                        <img src="https://placehold.co/400x400" alt="...">
+                    </div>
+                    <input type="file" style="display: none" name="samples[]" id="imageInputs" multiple accept="image/*">
+    
+                    <hr/>
+    
+                    <figcaption class="figure-caption"><a class="btn btn-primary changeImageBtn">Upload samples</a></figcaption>
+                  </figure>
                 </div>
 
                 <div class="mb-3 col-md-12">

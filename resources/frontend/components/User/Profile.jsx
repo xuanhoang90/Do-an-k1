@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Header from "../commons/Header";
+import Header from "../Commons/Header";
 import Footer from "../Commons/Footer";
 import useFetch from "../../hooks/useFetch";
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile, logout } from '../../features/auth/authSlice';
+import { Link } from "react-router-dom";
 
 export default function Profile(props) {
   const [image, setImage] = useState(null);
@@ -81,22 +82,22 @@ export default function Profile(props) {
                         <div className="widget-category">
                             <ul>
                             <li className="active">
-                                <a href="#">
-                                Your profile
-                                <i className="bi bi-arrow-right" />
-                                </a>
+                                  <Link to={'/user/profile'}>
+                                        Your profile
+                                        <i className="bi bi-arrow-right" />
+                                  </Link>
                             </li>
                             <li>
-                                <a href="#">
-                                Practice history
-                                <i className="bi bi-arrow-right" />
-                                </a>
+                                <Link to={'/user/practice-history'}>
+                                        Practice history
+                                        <i className="bi bi-arrow-right" />
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" onClick={handleLogout}>
-                                Logout
-                                <i className="bi bi-arrow-right" />
-                                </a>
+                                <a onClick={handleLogout}>
+                                        Logout
+                                        <i className="bi bi-arrow-right" />
+                                    </a>
                             </li>
                             </ul>
                         </div>

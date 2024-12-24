@@ -86,7 +86,7 @@ export default function Header(options) {
                                             </li>
                                             <li>
                                                 <Link
-                                                    to="/user/practice"
+                                                    to="/user/practice-history"
                                                     className="cursor-scale"
                                                 >
                                                     Practice
@@ -110,7 +110,7 @@ export default function Header(options) {
                             {
                                 token && (
                                     <div className="header-btn">
-                                        <a href="#" onClick={handleLogout}>Logout</a>
+                                        <a onClick={handleLogout}>Logout</a>
                                     </div>
                                 )
                             }

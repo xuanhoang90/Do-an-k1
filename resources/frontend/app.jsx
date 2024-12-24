@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Loading from "./components/Commons/Loading";
 import AppContext from "./utils/AppContext";
 import Register from "./components/User/Register";
+import PracticeHistory from "./components/User/PracticeHistory";
 
 function Blog() {
     return <h1>Blog Page</h1>;
@@ -39,6 +40,12 @@ function App() {
                     <Route path="/user/profile" element={
                         <ProtectedRoute>
                             <Profile />
+                        </ProtectedRoute>
+                    } />
+
+                    <Route path="/user/practice-history" element={
+                        <ProtectedRoute>
+                            <PracticeHistory />
                         </ProtectedRoute>
                     } />
 

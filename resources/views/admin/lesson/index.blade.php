@@ -55,6 +55,7 @@
                     <td>{{ $lesson->getStatusName() }}</td>
                     <td>
                       <a class="btn cur-p btn-info btn-color" href="{{ route('admin.lesson.edit', $lesson->id) }}">Edit</a>
+                      <a target="_blank" class="btn cur-p btn-success btn-color" href="{{ config('app.url') . '/lesson/' . $lesson->slug }}">View</a>
                     </td>
                   </tr>
                 @endforeach

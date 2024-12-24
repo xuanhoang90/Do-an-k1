@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import useFetch from "../../../hooks/useFetch";
 import { getData } from "../../../utils/api";
+import { useDispatch, useSelector } from 'react-redux';
+import PracticeArea from "./PracticeArea";
 
 export default function ContentLesson() {
   const { slug } = useParams()
   const [lesson, setLesson] = useState('')
   const [isShowPracticeArea, setIsShowPracticeArea] = useState(false)
+  const { token } = useSelector((state) => state.auth);
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -15,8 +19,12 @@ export default function ContentLesson() {
     })()
   }, [slug])
 
-  const handleShowPracticeArea = () => {
-    setIsShowPracticeArea(!isShowPracticeArea)
+  const openModal = () => {
+    setShowModal(true)
+  }
+
+  const closeModal = () => {
+    setShowModal(false)
   }
 
   return (
@@ -192,11 +200,25 @@ export default function ContentLesson() {
                     <div className="row align-items-center">
                       <div className="col-lg-6 col-md-6">
                         <div className="blog-details-category">
-                          <span>
-                            <a className="active-class" style={{'cursor': 'pointer'}} onClick={handleShowPracticeArea}>
-                              Let practice now!
-                            </a>
-                          </span>
+
+                          {
+                            token && (
+                              <span>
+                                <a className="active-class" style={{'cursor': 'pointer'}} onClick={openModal}>
+                                  Let practice now!
+                                </a>
+                              </span>
+                            )
+                          }
+
+                          {
+                            !token && (
+                              <span>
+                                <Link className="active-class" to={'/user/login'}>Login to practice!</Link>
+                              </span>
+                            )
+                          }
+
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
@@ -229,143 +251,21 @@ export default function ContentLesson() {
                   </div>
 
                   {
-                    isShowPracticeArea && (
-                      <div className="practice-area" style={{'width': '100%', 'height': '500px', 'background': 'white'}}>
-                        <div className="practice-area-title">
-                          <h3>Practice Area</h3>
+                    showModal && (
+                      <div className="myModal">
+                        <div className="initModal">
+
+                        <PracticeArea closeModal={closeModal} lesson={lesson} />
+
                         </div>
                       </div>
                     )
                   }
-
-                  <div className="single-comment-area">
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <div className="blog-details-comment-title">
-                          <h4>‘2’ Comments</h4>
-                        </div>
-                        <div className="blog-details-comment">
-                          <div className="blog-details-comment-reply">
-                            <a href="#">Reply</a>
-                          </div>
-                          <div className="blog-details-comment-thumb">
-                            <img src="theme/images/inner/details-img.png" alt="" />
-                          </div>
-                          <div className="blog-details-comment-content">
-                            <h2>Mariya Muskan</h2>
-                            <span>22 August, 2024</span>
-                            <p>
-                              I must explain to you how all this mistaken idea of denouncing
-                              pleasure and praising pain was born and I will give you a
-                              complete account of the system
-                            </p>
-                          </div>
-                        </div>
-                        <div className="blog-details-comment style-two">
-                          <div className="blog-details-comment-reply">
-                            <a href="#">Reply</a>
-                          </div>
-                          <div className="blog-details-comment-thumb">
-                            <img src="theme/images/inner/details-img2.png" alt="img" />
-                          </div>
-                          <div className="blog-details-comment-content">
-                            <h2>Mursalin</h2>
-                            <span>22 August, 2024</span>
-                            <p>
-                              I must explain to you how all this mistaken idea of denouncing
-                              pleasure and praising pain was born and I will give you a
-                              complete account of the system
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="blog-details-contact">
-                      <div className="blog-details-contact-title">
-                        <h4>Leave A Comments</h4>
-                      </div>
-                      <form action="#">
-                        <div className="row">
-                          <div className="col-lg-6">
-                            <div className="contact-input-box">
-                              <input
-                                type="text"
-                                name="Name"
-                                placeholder="Full Name*"
-                                required=""
-                              />
-                            </div>
-                          </div>
-                          <div className="col-lg-6">
-                            <div className="contact-input-box">
-                              <input
-                                type="text"
-                                name="Email"
-                                placeholder="Email Address*"
-                                required=""
-                              />
-                            </div>
-                          </div>
-                          <div className="col-lg-12">
-                            <div className="contact-input-box">
-                              <input
-                                type="text"
-                                name="Web Site"
-                                placeholder="Your Website*"
-                                required=""
-                              />
-                            </div>
-                          </div>
-                          <div className="col-lg-12">
-                            <div className="contact-input-box">
-                              <textarea
-                                name="Message"
-                                id="Meassage"
-                                placeholder="Write Comments..."
-                                defaultValue={""}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-lg-12">
-                            <div className="input-check-box">
-                              <input type="checkbox" />
-                              <span>
-                                Save your email info in the browser for next comments.
-                              </span>
-                            </div>
-                          </div>
-                          <div className="col-lg-12">
-                            <div className="blog-details-submi-button">
-                              <button type="submit">Post Comments</button>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
 
             
-          </div>
-        </div>
-      </div>
-
-      <div className="call-to-action-area">
-        <div className="container">
-          <div className="row call-bg align-items-center">
-            <div className="col-lg-9 col-md-8">
-              <div className="call-action-content">
-                <h5 className="call-action-title">FORM FILL-UP</h5>
-                <h1 className="call-sub-title">Login to practice</h1>
-              </div>
-            </div>
-            <div className="col-lg-3 col-md-4">
-              <div className="call-action-btn">
-                <a href="#">Getting started!</a>
-              </div>
-            </div>
           </div>
         </div>
       </div>

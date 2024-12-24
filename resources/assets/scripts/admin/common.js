@@ -30,4 +30,24 @@ imageInput.addEventListener('change', function (event) {
 
 $(document).on('click', '.block-preview-image .changeImageBtn', function () {
   $(this).parents('figure').find('#imageInput').click()
+  $(this).parents('figure').find('#imageInputs').click()
 })
+
+
+document.getElementById('imageInputs').addEventListener('change', function (event) {
+  const previewContainer = document.getElementById('previewContainer');
+  previewContainer.innerHTML = ''; // Xóa hình ảnh cũ (nếu có)
+
+  const files = event.target.files;
+  Array.from(files).forEach(file => {
+      if (file.type.startsWith('image/')) { // Kiểm tra nếu file là hình ảnh
+          const reader = new FileReader();
+          reader.onload = function (e) {
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              previewContainer.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+      }
+  });
+});

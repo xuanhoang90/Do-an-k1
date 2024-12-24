@@ -35,6 +35,12 @@ class HomeController
 
         $lesson->thumbnail = config('app.url') .'/storage/'. $lesson->thumbnail;
 
+        $lesson->samples = [];
+        foreach ($lesson->lessonSamples as $sample) {
+            $sample->thumbnail = config('app.url') .'/storage/'. $sample->thumbnail;
+            $lesson->samples[] = $sample;
+        }
+
         return response()->json($lesson);
     }
 
