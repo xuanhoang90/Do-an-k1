@@ -41,13 +41,18 @@ class AuthController
 
     public function logout(Request $request)
     {
-        $user = Auth::user();
-        $user->tokens()->delete(); // Revoke all tokens for the user
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        try {
+            $user = Auth::user();
+            $user->tokens()->delete(); // Revoke all tokens for the user
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
-        return response()->json(['message' => 'Logged out successfully'], 200);
+            return response()->json(['message' => 'Logged out successfully'], 200);
+        } catch (\Exception $e) {
+            Auth::logout();
+            return response()->json(['message' => 'Logged out successfully'], 200);
+        }
     }
 
     public function getUserInfo(Request $request)

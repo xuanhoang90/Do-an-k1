@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import RegisterForm from "./RegisterForm";
 import { getData } from "../../../utils/api";
+import { useDispatch, useSelector } from 'react-redux';
 import useFetch from "../../../hooks/useFetch";
 
 export default function Content() {
@@ -22,6 +23,7 @@ export default function Content() {
       language: language,
       category: category,
       level: level,
+      user_id: localStorage.getItem('user_id')
     };
 
     const filteredParams = Object.fromEntries(
@@ -231,11 +233,25 @@ export default function Content() {
                       <div className="col-lg-6 col-md-6" key={index}>
                         <div className="blog-singele-box">
                           <div className="blog-thumb">
+                            
+                              {
+                                post.isLearnedLesson && (
+                                  <div className="learnedTag learned">
+                                    <span>Learned</span>
+                                  </div>
+                                )
+                              }
+
+                              {
+                                !post.isLearnedLesson && (
+                                  <div className="learnedTag notlearnedyet">
+                                    <span>Not Learned Yet</span>
+                                  </div>
+                                )
+                              }
+
                             <img src={ post.thumbnail } alt="blog" height={400} style={{'objectFit': 'cover'}} />
                             <div className="blog-content">
-                              <div className="blog-date">
-                                <span>June 8, 2024</span>
-                              </div>
                               <h3 className="blog-title">
                                 <Link to={`/lesson/${post.slug}`}>{ post.title }</Link>
                               </h3>

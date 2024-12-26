@@ -17,6 +17,7 @@ export const login = createAsyncThunk(
       });
 
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user_id', response.data.user.id);
       return response.data
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -74,6 +75,7 @@ export const updateProfile = createAsyncThunk(
 export const logout = createAsyncThunk('auth/logout', async () => {
   await axios.post('/api/user/logout', {}, { withCredentials: true });
   localStorage.removeItem('token'); // Clear token
+  localStorage.removeItem('user_id'); // Clear token
 });
 
 const authSlice = createSlice({

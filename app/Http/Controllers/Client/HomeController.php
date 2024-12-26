@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Lesson;
 use App\Models\Level;
 use App\Models\National;
+use App\Models\StudentLessonHistory;
 use Illuminate\Http\Request;
 
 class HomeController
@@ -65,6 +66,12 @@ class HomeController
 
         foreach ($lessons as $lesson) {
             $lesson->thumbnail = config('app.url') .'/storage/'. $lesson->thumbnail;
+
+            if ($request->has('user_id')) {
+                $lesson->isLearnedLesson = StudentLessonHistory::isLearnedLesson($request->get('user_id'), $lesson->id);
+            } else {
+                $lesson->isLearnedLesson = false;
+            }
         }
 
         return response()->json($lessons);

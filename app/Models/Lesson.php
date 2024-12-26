@@ -12,6 +12,7 @@ class Lesson extends Model
     const STATUS_HIDE = 2;
 
     public $samples;
+    public $isLearned;
 
     public function getStatusName()
     {

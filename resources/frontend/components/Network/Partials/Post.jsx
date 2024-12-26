@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 
-export default function Post() {
+export default function Post({post}) {
   return (
     <>
       <div className="blog-details-area py-3">
         <div className="container">
           <div className="row">
-            <div className="col-lg-12">
+            <div className="col-lg-8 offset-2">
               <div className="row">
                 <div className="col-lg-12">
                   <div className="blog-details-thumb">
-                  <img src="http://127.0.0.1:8000/storage/thumbnails/FP4xqn0NmO2JWgnNTNFQBXYJ1qCC3RT3tUEtWKua.jpg" alt="thumb" />
+                  <img src={`/storage/${post?.student_lesson_history?.image}`} alt="thumb" />
                   </div>
                   <div className="blog-details-content">
                     <div className="meta-blog">
@@ -24,11 +24,9 @@ export default function Post() {
                         02 Comments
                       </span>
                     </div>
-                    <h4 className="blog-details-title">title</h4>
+                    <h4 className="blog-details-title">{ post.title }</h4>
 
-                    <p>I must explain to you how all this mistaken idea of denouncing
-                              pleasure and praising pain was born and I will give you a
-                              complete account of the system</p>
+                    <p>{ post.content }</p>
                   
                   
                   

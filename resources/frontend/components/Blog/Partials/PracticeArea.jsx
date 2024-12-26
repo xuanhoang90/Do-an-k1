@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { postData } from "../../../utils/api";
+import { getData, postData } from "../../../utils/api";
+import useFetch from "../../../hooks/useFetch";
+import { Context } from "../../../utils/AppContext";
 
 export default function PracticeArea ({closeModal, lesson}) {
     const canvasRef  = useRef(null)
@@ -11,6 +13,11 @@ export default function PracticeArea ({closeModal, lesson}) {
     const [penSize, setPenSize] = useState(5);
     const [lastTime, setLastTime] = useState(0);
     const [lastLineWidth, setLastLineWidth] = useState(1);
+    const [practiceHistories, setPracticeHistories] = useState(null);
+    const [triggerHistory, setTriggerHistory] = useState(1);
+    const [updateHistory, setUpdateHistory] = useState(null);
+    const { loading, setLoading } = useContext(Context)
+    const [shareAfterSave, setShareAfterSave] = useState(false)
 
     const colors = [
         '#000000',
@@ -25,6 +32,13 @@ export default function PracticeArea ({closeModal, lesson}) {
     const sizes = [
         3, 5, 7, 10, 12
     ]
+
+    useEffect(() => {
+        (async () => {
+            let data = await getData(`user/practice-histories?lesson_id=${lesson.id}`)
+            setPracticeHistories(data)
+        })()
+    }, [triggerHistory])
 
     useEffect(() => {
         setSampleImage(lesson.lesson_samples[0].thumbnail)
@@ -49,7 +63,10 @@ export default function PracticeArea ({closeModal, lesson}) {
         const backgroundImage = new Image();
         backgroundImage.src = sampleImage; // Replace with your image URL
         backgroundImage.onload = () => {
-            context.globalAlpha = 0.3;
+            if (!updateHistory) {
+                context.globalAlpha = 0.3;
+            }
+
             context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
         };
         context.globalAlpha = 1.0;
@@ -92,22 +109,81 @@ export default function PracticeArea ({closeModal, lesson}) {
         setIsDrawing(false);
     };
 
+    const handleUpdateHistory = (history) => {
+        if (history.id != updateHistory && confirm('Are you sure you want to update the history')) {
+            setUpdateHistory(history.id)
+            setSampleImage(history.image)
+        }
+    }
+
+    const handleSelectSampleImage = (imageurl) => {
+        if (imageurl != sampleImage && confirm('Are you sure you want to change the sample image')) {
+            setSampleImage(imageurl)
+            setUpdateHistory(null)
+        }
+    }
+
+    const handleClearCanvas = () => {
+        if (confirm('Are you sure you want to clear the canvas')) {
+            const canvas = canvasRef.current;
+            const context = canvas.getContext('2d');
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            const backgroundImage = new Image();
+            backgroundImage.src = sampleImage; // Replace with your image URL
+            backgroundImage.onload = () => {
+                if (!updateHistory) {
+                    context.globalAlpha = 0.3;
+                }
+
+                context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            };
+            context.globalAlpha = 1.0;
+        }
+    }
+
     const postCanvasImage = async () => {
+        setLoading(true)
         const canvas = canvasRef.current;
 
         canvas.toBlob(async (blob) => {
           const formData = new FormData();
           formData.append('image', blob, 'canvas-image.png');
           formData.append('lesson_id', lesson.id);
-    
+          formData.append('share_after_save', shareAfterSave);
+
+          if (updateHistory) {
+            formData.append('practice_history_id', updateHistory);
+          }
+
           let res = await postData('user/save-practice', formData)
-          
+
           if (res.success) {
-            alert('Image has been saved successfully')
-            closeModal()
+            setTriggerHistory(triggerHistory + 1)
+            setLoading(false)
+            setUpdateHistory(res.data.id)
+            setSampleImage(res.data.image)
+            setShareAfterSave(false)
           }
         }, 'image/png');
     };
+
+    const handleRemovePractice = async (history) => {
+        if (confirm('Are you sure you want to remove this practice history')) {
+            await postData(`user/remove-practice-history`, {history_id: history.id})
+            setTriggerHistory(triggerHistory + 1)
+
+            if (history.id == updateHistory) {
+                setUpdateHistory(null)
+                setSampleImage(lesson.lesson_samples[0].thumbnail)
+            }
+        }
+    }
+
+    const handleShare = async () => {
+        setShareAfterSave(true)
+        await postCanvasImage();
+    }
 
     return (
         <>
@@ -127,7 +203,7 @@ export default function PracticeArea ({closeModal, lesson}) {
                                 <div className="previewSamples">
                                     {
                                         lesson?.lesson_samples?.map((sample, index) => (
-                                            <img key={index} className={sample.thumbnail == sampleImage ? 'selected' : ''} onClick={() => setSampleImage(sample.thumbnail)} src={sample.thumbnail} alt="Sample" />
+                                            <img key={index} className={sample.thumbnail == sampleImage ? 'selected' : ''} onClick={() => handleSelectSampleImage(sample.thumbnail)} src={sample.thumbnail} alt="Sample" />
                                         ))
                                     }
                                 </div>
@@ -168,14 +244,40 @@ export default function PracticeArea ({closeModal, lesson}) {
                                 onMouseLeave={stopDrawing}
                             />
 
+                            <div className="submit-button mt-3" style={{'width': '150px', 'margin': '0 auto'}}>
+                                <button type="button" onClick={handleClearCanvas}>Clear</button>
+                            </div>
+                        </div>
+
+                        <div className="historiesList">
+                            <div className="initHistory">
+                            {
+                                practiceHistories && practiceHistories.map(history => {
+
+                                    return (
+                                        <div key={history.id} className={ updateHistory == history.id ? "historyItem selected" : "historyItem"}>
+                                            <button type="button" className="btn-close" onClick={() => handleRemovePractice(history)}></button>
+                                            <img src={history.image} alt="History" onClick={() => handleUpdateHistory(history)} />
+                                            <p>{ history.created_at.split('T')[0] } : { history.created_at.split('T')[1].split('.')[0] }</p>
+                                        </div>
+                                    )
+                                })
+                            }
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="row">
-                    <div className="col-lg-4 offset-4">
+                    <div className="col-lg-4">
                         <div className="submit-button">
-                            <button type="button" onClick={postCanvasImage}>Save</button>
+                            <button type="button" onClick={postCanvasImage}>{ updateHistory ? 'Update' : 'Save' }</button>
+                        </div>
+                    </div>
+
+                    <div className="col-lg-4 offset-4">
+                        <div className="submit-button classInfo">
+                            <button type="button" onClick={handleShare}>Share</button>
                         </div>
                     </div>
                 </div>

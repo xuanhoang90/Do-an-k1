@@ -53,7 +53,7 @@ export default function Header(options) {
                                         </Link>
                                     </li>
                                     <li>
-                                        <a className="cursor-scale" href="#">
+                                        <a className="cursor-scale">
                                             Learn Caligraphy
                                         </a>
                                         <ul className="sub-menu">
@@ -72,7 +72,7 @@ export default function Header(options) {
                                         </ul>
                                     </li>
                                     <li>
-                                        <a className="cursor-scale" href="#">
+                                        <a className="cursor-scale">
                                             User
                                         </a>
                                         <ul className="sub-menu">
