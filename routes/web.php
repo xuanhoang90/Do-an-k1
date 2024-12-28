@@ -91,7 +91,8 @@ Route::prefix('api')->group(function () {
         Route::post('/remove-practice-history', [PracticeController::class, 'removePracticeHistory'])->name('removePracticeHistory');
         Route::post('/share-practice', [PracticeController::class, 'sharePractice'])->name('sharePractice');
 
-        Route::get('/social-post', [SocialPostController::class, 'getSocialPost'])->name('getSocialPost');;
+        Route::get('/social-post', [SocialPostController::class, 'getSocialPost'])->name('getSocialPost');
+        Route::post('/like-post', [SocialPostController::class, 'likePost'])->name('likePost');
     });
 });
 

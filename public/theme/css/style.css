@@ -297,7 +297,7 @@ nav.lavewell_menu span {
     display: inline-block;
     font-size: 14px;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 500;
     background: #97aa85;
     padding: 15px 42px;
@@ -305,6 +305,7 @@ nav.lavewell_menu span {
     position: relative;
     z-index: 9;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 .header-btn a::before {
@@ -4448,4 +4449,8 @@ p.details-desc,
 
 .classInfo button {
     background-color: #00aff5 !important;
+}
+
+.social-action-btn .button:hover {
+    background: #00aff5;
 }

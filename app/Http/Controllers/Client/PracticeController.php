@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Events\NewPost;
 use App\Models\SocialPost;
 use App\Models\StudentLessonHistory;
 use Illuminate\Http\Request;
@@ -53,6 +54,8 @@ class PracticeController
         $socialPost->title = 'I just completed the practice of ' . $history->lesson->title;
         $socialPost->content = $history->lesson->short_description;
         $socialPost->save();
+
+        broadcast(new NewPost($socialPost))->toOthers();
     }
 
     public function getPracticeHistories(Request $request)

@@ -17,4 +17,14 @@ class SocialPost extends Model
     {
         return SocialPost::where('student_lesson_history_id', $historyId)->exists();
     }
+
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(SocialPostComment::class, 'social_post_id');
+    }
 }
