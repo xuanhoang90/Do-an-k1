@@ -72,29 +72,6 @@ export default function Header(options) {
                                         </ul>
                                     </li>
                                     <li>
-                                        <a className="cursor-scale">
-                                            User
-                                        </a>
-                                        <ul className="sub-menu">
-                                            <li>
-                                                <Link
-                                                    to="/user/profile"
-                                                    className="cursor-scale"
-                                                >
-                                                    Profile
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    to="/user/practice-history"
-                                                    className="cursor-scale"
-                                                >
-                                                    Practice
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
                                         <Link
                                             to="/network"
                                             className="cursor-scale"
@@ -109,9 +86,36 @@ export default function Header(options) {
 
                             {
                                 token && (
-                                    <div className="header-btn">
-                                        <a onClick={handleLogout}>Logout</a>
-                                    </div>
+                                    <nav className="lavewell_menu">
+                                        <ul className="nav_scroll">
+                                            <li>
+                                                <a className="cursor-scale">
+                                                    User
+                                                </a>
+                                                <ul className="sub-menu">
+                                                    <li>
+                                                        <Link
+                                                            to="/user/profile"
+                                                            className="cursor-scale"
+                                                        >
+                                                            Profile
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link
+                                                            to="/user/practice-history"
+                                                            className="cursor-scale"
+                                                        >
+                                                            Practice
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <a onClick={handleLogout}>Logout</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 )
                             }
 

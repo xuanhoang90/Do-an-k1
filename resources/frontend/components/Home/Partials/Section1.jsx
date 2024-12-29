@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Section1(props) {
   return (
@@ -18,17 +19,11 @@ export default function Section1(props) {
                   <h1>Western Calligraphy</h1>
                 </div>
                 <div className="banner-btn">
-                  <a href="about-us.html">Caligraphy</a>
+                  <Link to={'/blog/vi'}>Learn Caligraphy</Link>
                 </div>
               </div>
             </div>
           </div>
-          {/* <div class="banner-img-shape">
-              <img src="assets/images/caligraphy/5.jpg" width="450" alt="img">
-          </div>
-          <div class="banner-img-shape2">
-            <img src="assets/images/caligraphy/7.jpg" width="450" alt="img">
-        </div> */}
         </div>
       </section>
     </>

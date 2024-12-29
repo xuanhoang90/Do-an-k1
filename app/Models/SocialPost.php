@@ -27,4 +27,9 @@ class SocialPost extends Model
     {
         return $this->hasMany(SocialPostComment::class, 'social_post_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(SocialPostLike::class, 'social_post_id');
+    }
 }

@@ -43,7 +43,10 @@ class AuthController
     {
         try {
             $user = Auth::user();
-            $user->tokens()->delete(); // Revoke all tokens for the user
+            if ($user) {
+                $user->tokens()->delete(); // Revoke all tokens for the user
+            }
+
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

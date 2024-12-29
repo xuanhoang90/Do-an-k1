@@ -38,7 +38,7 @@ export default function Network(options) {
   }, []);
 
   const updateLikePost = (post) => {
-    const updatedPost = {...post, is_liked: !post.is_liked }
+    const updatedPost = {...post, is_liked: !post.is_liked, like_count: post.is_liked ? (post.like_count - 1) : (post.like_count + 1)}
     setSocialPost(prevState => prevState.map(p => p.id === post.id ? updatedPost : p))
   }
 

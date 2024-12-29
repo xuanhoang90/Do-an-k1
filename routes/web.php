@@ -93,6 +93,8 @@ Route::prefix('api')->group(function () {
 
         Route::get('/social-post', [SocialPostController::class, 'getSocialPost'])->name('getSocialPost');
         Route::post('/like-post', [SocialPostController::class, 'likePost'])->name('likePost');
+        Route::get('/get-post-comments', [SocialPostController::class, 'getSocialPostComments'])->name('getSocialPostComments');
+        Route::post('/post-comment', [SocialPostController::class, 'addSocialPostComment'])->name('postComment');
     });
 });
 

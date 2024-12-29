@@ -25,6 +25,8 @@ class NewPost implements ShouldBroadcast
             'student_name' => $post->student->name,
             'student_avatar' => $post->student->profile->avatar,
             'is_liked' => false,
+            'like_count' => 0,
+            'comment_count' => 0,
         ];
     }
 

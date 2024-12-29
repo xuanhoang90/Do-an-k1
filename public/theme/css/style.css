@@ -193,6 +193,7 @@ nav.lavewell_menu span {
     transition: 0.5s;
     font-family: "Josefin Sans";
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .lavewell_menu ul .sub-menu li:hover > a,
@@ -1872,7 +1873,7 @@ p.blog-desc {
 }
 
 .footer-bg {
-    background: #f4f0ed;
+    background: white;
 }
 
 .footer-single-item {
@@ -4337,18 +4338,17 @@ p.details-desc,
     bottom: 0;
     z-index: 9999;
     background: rgba(0, 0, 0, 0.5);
+    overflow: auto;
 }
 
 .myModal .initModal {
     background: white;
     padding: 20px;
     border-radius: 5px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1200px;
-    max-width: 90%;
+    width: 90%;
+    max-width: 1200px;
+    display: block;
+    margin: 50px auto;
 }
 
 #practiceArea {
@@ -4453,4 +4453,11 @@ p.details-desc,
 
 .social-action-btn .button:hover {
     background: #00aff5;
+}
+
+.useAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
 }
