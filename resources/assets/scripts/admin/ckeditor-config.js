@@ -8,7 +8,7 @@ class MyUploadAdapter {
       const data = new FormData();
       data.append('upload', file);
 
-      return fetch("{{ route('admin.image.upload') }}", {
+      return fetch("/admin/upload-image", {
         method: 'POST',
         body: data,
         headers: {
