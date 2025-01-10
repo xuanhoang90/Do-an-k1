@@ -1,45 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { getData } from "../../../utils/api";
 import PostCommentForm from "./PostCommentForm";
-export default function PostComment({post}) {
-    const [comments, setComments] = useState([])
+export default function PostComment({ post }) {
+    const [showReplyForm, setShowReplyForm] = useState(false);
+
+    const [comments, setComments] = useState([]);
 
     const handleUpdateComment = (comment) => {
         if (comment.parent_id == 0) {
-            setComments(prevState => [...prevState, comment])
+            setComments((prevState) => [...prevState, comment]);
         } else {
-            setComments(prevState => prevState.map(item => {
-                if (item.id === comment.parent_id) {
-                    item.sub_comments = [...item.sub_comments, comment]
-                }
-                return item;
-            }))
+            setComments((prevState) =>
+                prevState.map((item) => {
+                    if (item.id === comment.parent_id) {
+                        item.sub_comments = [...item.sub_comments, comment];
+                    }
+                    return item;
+                })
+            );
         }
-    }
+    };
 
     useEffect(() => {
         // Initialize Pusher
-        const pusher = new Pusher('1e0c9cef4c2faceaef9d', {
-          cluster: 'ap1',
+        const pusher = new Pusher("1e0c9cef4c2faceaef9d", {
+            cluster: "ap1",
         });
-    
+
         const channel = pusher.subscribe(`comment-channel-${post.id}`);
-        channel.bind('new-comment', (data) => {
-          handleUpdateComment(data.comment)
+        channel.bind("new-comment", (data) => {
+            handleUpdateComment(data.comment);
         });
-    
+
         return () => {
-          channel.unbind_all();
-          channel.unsubscribe();
+            channel.unbind_all();
+            channel.unsubscribe();
         };
     }, []);
 
     useEffect(() => {
         (async () => {
-            const data = await getData(`user/get-post-comments?social_post_id=${post.id}`)
+            const data = await getData(
+                `user/get-post-comments?social_post_id=${post.id}`
+            );
             setComments(data);
-        })()
-    }, [post])
+        })();
+    }, [post]);
+
+    // Hàm xử lý khi nhấn nút "Reply" để toggle trạng thái hiển thị form trả lời
+    const handleReplyClick = (commentId) => {
+        setShowReplyForm((prevState) => ({
+            ...prevState,
+            [commentId]: !prevState[commentId], // Toggle trạng thái form của comment cụ thể
+        }));
+    };
 
     return (
         <>
@@ -50,47 +64,96 @@ export default function PostComment({post}) {
                             <h4>{post.comment_count} Comments</h4>
                         </div>
 
-                        {
-                            comments && comments.map(comment => {
+                        {comments &&
+                            comments.map((comment) => {
                                 return (
                                     <div key={comment.id}>
                                         <div className="blog-details-comment">
                                             <div className="blog-details-comment-thumb">
-                                                <img className="useAvatar" src={'/storage/'+ comment.student_avatar} alt="" />
+                                                <img
+                                                    className="useAvatar"
+                                                    src={
+                                                        "/storage/" +
+                                                        comment.student_avatar
+                                                    }
+                                                    alt=""
+                                                />
                                             </div>
                                             <div className="blog-details-comment-content">
                                                 <h2>{comment.student_name}</h2>
-                                                <span>{comment.created_at}</span>
+                                                <span>
+                                                    {comment.created_at}
+                                                </span>
                                                 <p>{comment.content}</p>
                                             </div>
 
-                                            {
-                                                comment.sub_comments && comment.sub_comments.map(sub => {
-                                                    return (
-                                                        <div key={sub.id}>
-                                                            <div className="blog-details-comment style-two">
-                                                                <div className="blog-details-comment-thumb">
-                                                                    <img className="useAvatar" src={'/storage/'+ sub.student_avatar} alt="img" />
-                                                                </div>
-                                                                <div className="blog-details-comment-content">
-                                                                    <h2>{sub.student_name}</h2>
-                                                                    <span>{sub.created_at}</span>
-                                                                    <p>{sub.content}</p>
+                                            {comment.sub_comments &&
+                                                comment.sub_comments.map(
+                                                    (sub) => {
+                                                        return (
+                                                            <div key={sub.id}>
+                                                                <div className="blog-details-comment style-two">
+                                                                    <div className="blog-details-comment-thumb">
+                                                                        <img
+                                                                            className="useAvatar"
+                                                                            src={
+                                                                                "/storage/" +
+                                                                                sub.student_avatar
+                                                                            }
+                                                                            alt="img"
+                                                                        />
+                                                                    </div>
+                                                                    <div className="blog-details-comment-content">
+                                                                        <h2>
+                                                                            {
+                                                                                sub.student_name
+                                                                            }
+                                                                        </h2>
+                                                                        <span>
+                                                                            {
+                                                                                sub.created_at
+                                                                            }
+                                                                        </span>
+                                                                        <p>
+                                                                            {
+                                                                                sub.content
+                                                                            }
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    )
-                                                })
-                                            }
+                                                        );
+                                                    }
+                                                )}
 
-                                            <div className="blog-details-comment style-two">
-                                                <PostCommentForm postId={post.id} parentId={comment.id} />
-                                            </div>
+                                            {/* Hiển thị nút "Reply" nếu chưa mở form */}
+                                            {!showReplyForm[comment.id] && (
+                                                <div className="reply-button">
+                                                    <button
+                                                        onClick={() =>
+                                                            handleReplyClick(
+                                                                comment.id
+                                                            )
+                                                        }
+                                                    >
+                                                        Reply
+                                                    </button>
+                                                </div>
+                                            )}
+
+                                            {/* Hiển thị form trả lời nếu showReplyForm[comment.id] là true */}
+                                            {showReplyForm[comment.id] && (
+                                                <div className="blog-details-comment style-two">
+                                                    <PostCommentForm
+                                                        postId={post.id}
+                                                        parentId={comment.id}
+                                                    />
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
-                                )
-                            })
-                        }
+                                );
+                            })}
 
                         <div className="col-lg-12">
                             <PostCommentForm postId={post.id} parentId={0} />
@@ -99,5 +162,5 @@ export default function PostComment({post}) {
                 </div>
             </div>
         </>
-    )
+    );
 }
