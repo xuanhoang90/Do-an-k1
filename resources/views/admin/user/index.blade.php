@@ -48,7 +48,7 @@
 
                   <tr>
                     <td>{{ $user->id }}</td>
-                    <td><img src="{{ asset('storage/' . $user->profile?->avatar) }}" class="coverImage" /></td>
+                    <td><img src="{{ $user->profile?->avatar ? asset('storage/' . $user->profile->avatar) : asset('/Profile.png')}}"  class="coverImage" /></td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->profile?->display_name ?? 'No name' }}</td>
