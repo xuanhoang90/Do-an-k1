@@ -32,14 +32,6 @@ export default function Footer(options) {
             </div>
           </div>
         </div>
-
-        <div className="row mt-5">
-          <div className="col-lg-12 col-md-12">
-            <div className="footer-copyright">
-              <p className='text-center'>Copyright @ 2024 Calligraphy.website. All rights reserved.</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )

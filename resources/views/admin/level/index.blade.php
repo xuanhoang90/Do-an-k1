@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="bgc-white bd bdrs-3 p-20 mB-20">
-        <h4 class="c-grey-900 mB-20">Danh sach level</h4>
+        <h4 class="c-grey-900 mB-20">Level List</h4>
 
         <a class="btn btn-success" href="{{ route('admin.level.create') }}">Create level</a>
 
