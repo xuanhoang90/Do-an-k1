@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin\Category;
-
+use App\Http\Requests\Admin\CreateCategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController
@@ -11,49 +11,46 @@ class CategoryController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
-        return view('modules.category.index', compact('categories'));
-    //    return view('modules.category.index');
+        $query = Category::orderBy('id', 'desc');
+
+        if ($request->has('q')) {
+            $query->where('name', 'LIKE', "%{$request->get('q')}%")
+                ->orWhere('description', 'LIKE', "%{$request->get('q')}%");
+        }
+
+        $categories = $query->get();
+        return view('admin.category.index', compact('categories'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('modules.category.create');
+        return view('admin.category.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
+        $category = new Category();
+        $category->name = $request->get('name');
+        $category->description = $request->get('description');
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
-        ]);
-
-        $filename = null;
         if ($request->hasFile('thumbnail')) {
-            $file = $request->file('thumbnail');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/category'), $filename);
+            $image = $request->file('thumbnail');
+            $imageName = time(). '.'. $image->getClientOriginalExtension();
+            $thumbnailPath = $image->storeAs('categories', $imageName, 'public');
+            $category->thumbnail = $thumbnailPath;
         }
 
-        Category::create([
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-            'thumbnail' => $filename,
-            'status' => $request->status,
-        ]);
+        $category->save();
 
-        return redirect()
-            ->route('admin.category.index')
-            ->with('success', 'Category created successfully!');
+        return redirect()->route('admin.category.index')->with('success', 'Category created successfully!');
     }
 
     /**
@@ -67,68 +64,55 @@ class CategoryController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(string $id)
     {
         $category = Category::findOrFail($id);
-        return view('modules.category.edit', compact('category'));
+
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $category = Category::findOrFail($id);
+        $category->name = $request->get('name');
+        $category->description = $request->get('description');
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg',
-        ]);
-
-        $filename = $category->thumbnail; // Giữ lại thumbnail cũ
         if ($request->hasFile('thumbnail')) {
-            $file = $request->file('thumbnail');
-
-            // Xóa thumbnail cũ nếu tồn tại
-            $old_thumbnail = public_path('uploads/category/' . $category->thumbnail);
-            if (file_exists($old_thumbnail)) {
-                unlink($old_thumbnail);
-            }
-
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/category'), $filename);
+            $image = $request->file('thumbnail');
+            $imageName = time(). '.'. $image->getClientOriginalExtension();
+            $thumbnailPath = $image->storeAs('categories', $imageName, 'public');
+            $category->thumbnail = $thumbnailPath;
         }
 
-        $category->update([
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-            'thumbnail' => $filename,
-            'status' => $request->status,
-        ]);
+        $category->save();
 
-        return redirect()
-            ->route('admin.category.index')
-            ->with('success', 'Category updated successfully!');
+        return redirect()->route('admin.category.index')->with('success', 'Category updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
+    {
+        //
+    }
+
+    public function hideCategory(string $id)
     {
         $category = Category::findOrFail($id);
+        $category->hideCategory();
 
-        // Xóa thumbnail nếu tồn tại
-        $old_thumbnail = public_path('uploads/category/' . $category->thumbnail);
-        if (file_exists($old_thumbnail)) {
-            unlink($old_thumbnail);
-        }
+        return redirect()->route('admin.category.index')->with('success', 'Category hidden successfully!');
+    }
 
-        $category->delete();
+    public function showCategory(string $id)
+    {
+        $category = Category::findOrFail($id);
+        $category->showCategory();
 
-        return redirect()
-            ->route('admin.category.index')
-            ->with('success', 'Category deleted successfully!');
+        return redirect()->route('admin.category.index')->with('success', 'Category shown successfully!');
     }
 }

@@ -2,21 +2,32 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Admin\Level;
-use App\Models\Admin\Lesson;
-
+use App\Http\Requests\Admin\CreateLessonRequest;
+use App\Models\Category;
+use App\Models\Lesson;
+use App\Models\LessonSample;
+use App\Models\Level;
+use App\Models\National;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LessonController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lessons = Lesson::with('level')->get();
-        $levels = Level::all();
-        return view('modules.lesson.index', compact('lessons', 'levels'));
+        $query = Lesson::orderBy('id', 'desc');
+
+        if ($request->has('q')) {
+            $query->where('title', 'LIKE', "%{$request->get('q')}%")
+                ->orWhere('short_description', 'LIKE', "%{$request->get('q')}%");
+        }
+
+        $lessons = $query->get();
+
+        return view('admin.lesson.index', compact('lessons'));
     }
 
     /**
@@ -24,53 +35,39 @@ class LessonController
      */
     public function create()
     {
-        //
+        $nationals = National::all();
+        $levels = Level::all();
+        $categories = Category::all();
+
+        return view('admin.lesson.create', compact('nationals', 'levels', 'categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateLessonRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'content' => 'required',
-            'short_description' => 'required|string|max:255',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'sample_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'status' => 'required',
-        ]
-
-    );
-            
+        $lesson = new Lesson();
+        $lesson->title = $request->get('title');
+        $lesson->short_description = $request->get('short_description');
+        $lesson->content = $request->get('content');
+        $lesson->level_id = $request->get('level_id');
+        $lesson->national_id = $request->get('national_id');
+        $lesson->category_id = $request->get('category_id');
+        $lesson->slug = Str::slug($request->get('title'));
 
         if ($request->hasFile('thumbnail')) {
-            $thumbnail = 'uploads/lessons/thumbnail/' . uniqid() . '.' . $request->file('thumbnail')->getClientOriginalExtension();
-            $request->file('thumbnail')->move(public_path('uploads/lessons/thumbnail'), basename($thumbnail));
-
-            $sampleImages = [];
-            if ($request->hasFile('sample_images')) {
-                foreach ($request->file('sample_images') as $file) {
-                    $path = 'uploads/lessons/sample_images/' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('uploads/lessons/sample_images'), basename($path));
-                    $sampleImages[] = $path;
-                }
-            }
-
-            Lesson::create([
-                'name' => $validated['name'],
-                'content' => $validated['content'],
-                'short_description' => $validated['short_description'],
-                'thumbnail' => $thumbnail,
-                'sample_image' => json_encode($sampleImages),
-                'status' => $validated['status'],
-
-            ]);
-            return redirect()
-                ->route('admin.lesson.index')
-                ->with('success', 'Lesson created successfully!');
+            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
+            $lesson->thumbnail = $thumbnailPath;
         }
+
+        $lesson->save();
+
+        $this->uploadSamples($lesson, $request);
+
+        return redirect()->route('admin.lesson.index')->with('success', 'Lesson created successfully.');
     }
+
     /**
      * Display the specified resource.
      */
@@ -82,75 +79,65 @@ class LessonController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(string $id)
     {
-        $lesson = Lesson::with('level')->findOrFail($id);
+        $lesson = Lesson::findOrFail($id);
+        $nationals = National::all();
+        $levels = Level::all();
+        $categories = Category::all();
 
-        return view('modules.lession.edit', compact('lesson', 'levels'));
+        return view('admin.lesson.edit', compact('lesson', 'nationals', 'levels', 'categories'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        $lesson = Lesson::with('level')->findOrFail($id);
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'content' => 'required',
-            'short_description' => 'required|string|max:255',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|',
-            'sample_image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        $lesson = Lesson::findOrFail($id);
+        $lesson->title = $request->get('title');
+        $lesson->short_description = $request->get('short_description');
+        $lesson->content = $request->get('content');
+        $lesson->level_id = $request->get('level_id');
+        $lesson->national_id = $request->get('national_id');
+        $lesson->category_id = $request->get('category_id');
+        $lesson->slug = Str::slug($request->get('title'));
 
-        ]);
-
-        if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-
-            if ($lesson->thumbnail && file_exists(public_path($lesson->thumbnail))) {
-                unlink(public_path($lesson->thumbnail));
-            }
-            $thumbnailPath = 'uploads/lessons/' . time() . '.' . $request->file('thumbnail')->getClientOriginalExtension();
-            $request->file('thumbnail')->move(public_path('uploads/lessons'), basename($thumbnailPath));
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
             $lesson->thumbnail = $thumbnailPath;
         }
 
-        if ($request->hasFile('sample_image') && $request->file('sample_image')->isValid()) {
-            if ($lesson->sample_image && file_exists(public_path($lesson->sample_image))) {
-                unlink(public_path($lesson->sample_image));
-            }
+        $lesson->save();
 
-            $sampleImagePath = 'uploads/lesson/sample_images/' . time() . '.' . $request->file('sample_image')->getClientOriginalExtension();
-            $request->file('sample_image')->move(public_path('uploads/lesson/sample_images'), basename($sampleImagePath));
-            $lesson->sample_image = $sampleImagePath;
-        }
+        $this->uploadSamples($lesson, $request);
 
-        $lesson->update([
-            'name' => $validated['name'],
-            'content' => $validated['content'],
-            'short_description' => $validated['short_description'],
-            'status' => $validated['status'],
-        ]);
-
-        return redirect()->route('modules.lesson.index')->with('success', 'Lesson updated successfully!');
+        return redirect()->route('admin.lesson.index')->with('success', 'Lesson updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        $lesson = Lesson::findOrFail($id);
+        //
+    }
 
-        if ($lesson->thumbnail && file_exists(public_path($lesson->thumbnail))) {
-            unlink(public_path($lesson->thumbnail));
+    private function uploadSamples(Lesson $lesson, Request $request)
+    {
+        if ($request->hasFile('samples')) {
+            $samples = $request->file('samples');
+
+            LessonSample::where(['lesson_id' => $lesson->id])->delete();
+
+            foreach ($samples as $sample) {
+                $samplePath = $sample->store('samples', 'public');
+                $lessonSample = new LessonSample();
+                $lessonSample->lesson_id = $lesson->id;
+                $lessonSample->thumbnail = $samplePath;
+                $lessonSample->save();
+            }
         }
-
-        if ($lesson->sample_image && file_exists(public_path($lesson->sample_image))) {
-            unlink(public_path($lesson->sample_image));
-        }
-
-        $lesson->delete();
-
-        return redirect()->route('admin.lesson.index')->with('success', 'Lesson deleted successfully!');
     }
 }

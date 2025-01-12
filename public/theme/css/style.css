@@ -193,6 +193,7 @@ nav.lavewell_menu span {
     transition: 0.5s;
     font-family: "Josefin Sans";
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .lavewell_menu ul .sub-menu li:hover > a,
@@ -297,7 +298,7 @@ nav.lavewell_menu span {
     display: inline-block;
     font-size: 14px;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 500;
     background: #97aa85;
     padding: 15px 42px;
@@ -305,6 +306,7 @@ nav.lavewell_menu span {
     position: relative;
     z-index: 9;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 .header-btn a::before {
@@ -1405,6 +1407,28 @@ textarea::placeholder {
     padding: 12px 20px;
 }
 
+.submit-button .button {
+    width: 100%;
+    color: #fff;
+    border: 0;
+    outline: 0;
+    background: #97aa85;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.submit-button .button {
+    width: 100%;
+    color: #fff;
+    border: 0;
+    outline: 0;
+    background: #97aa85;
+    text-transform: uppercase;
+    padding: 12px 20px;
+}
+
 /*=========================================
    <!--start lavewell contact section css-->
 =========================================*/
@@ -1699,6 +1723,29 @@ h3.testi-user-name span {
     margin-bottom: 30px;
 }
 
+.blog-singele-box .learnedTag {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    width: 150px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    display: block;
+    z-index: 999;
+    text-align: center;
+}
+
+.blog-singele-box .learnedTag.learned {
+    background-color: green;
+}
+
+.blog-singele-box .learnedTag.notlearnedyet {
+    background-color: red;
+}
+
 .blog-thumb {
     position: relative;
 }
@@ -1826,7 +1873,7 @@ p.blog-desc {
 }
 
 .footer-bg {
-    background: #f4f0ed;
+    background: white;
 }
 
 .footer-single-item {
@@ -3372,6 +3419,10 @@ button.icons {
     font-weight: 400;
 }
 
+.widget-category .submenu {
+    margin-left: 20px;
+}
+
 .widget-category ul li {
     list-style: none;
 }
@@ -3426,6 +3477,37 @@ button.icons {
     opacity: 1;
     color: #fff;
 }
+
+.widget-category ul li.active a {
+    width: 100%;
+    left: 0;
+    background: #97aa85;
+}
+
+.widget-category ul li.active a {
+    color: #fff;
+}
+
+.widget-category ul li.active a i {
+    opacity: 1;
+    color: #fff;
+}
+
+.widget-category ul li.not-active a {
+    width: 100%;
+    left: 0;
+    background: none;
+}
+
+.widget-category ul li.not-active a {
+    color: #001819;
+}
+
+.widget-category ul li.not-active a i {
+    opacity: 1;
+    color: #001819;
+}
+
 .sidber-widget-recent-post {
     margin-bottom: 27px;
     display: flex;
@@ -3620,6 +3702,10 @@ span.mate-comment i {
 .blog-details-content {
     padding: 27px 36px 20px;
     border: 1px solid #2222;
+}
+
+.blog-details-content img{
+    max-width: 100% !important;
 }
 
 .blog-details-area .meta-blog span {
@@ -3905,7 +3991,7 @@ p.blog-details-desc.three {
     background: #fff;
     border: transparent;
     width: 100%;
-    height: 170px;
+    /* height: 170px; */
     padding: 12px 22px 0;
     outline: 0;
     margin-top: 11px;
@@ -4154,7 +4240,7 @@ p.details-desc,
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 1;
+    z-index: 999999;
     margin-top: 0px;
     top: 0px;
 }
@@ -4236,4 +4322,142 @@ p.details-desc,
         -webkit-transform: rotate(360deg) scale(0.8);
         transform: rotate(360deg) scale(0.8);
     }
+}
+
+
+.profile-page label {
+    color: black;
+}
+
+.myModal {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.myModal .initModal {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 1200px;
+    display: block;
+    margin: 50px auto;
+}
+
+#practiceArea {
+    display: block;
+    margin: 0 auto;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#pacticeAreaContainer {
+    position: relative;
+}
+
+#pacticeAreaContainer .btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.previewSamples img {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.previewSamples img.selected {
+    box-shadow: 0px 0px 5px red;
+}
+
+.colors .color-item {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+}
+
+.colors .color-item.selected {
+    box-shadow: 0px 0px 5px red;
+}
+
+.sizes .sizes-item {
+    width: 100%;
+    display: block;
+    margin: 5px;
+    background-color: #000;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sizes .sizes-item.selected {
+    box-shadow: 0px 0px 5px red;
+}
+
+.historiesList {
+    width: 100%;
+    height: 180px;
+    overflow: auto;
+}
+
+.historiesList .historyItem {
+    width: 100px;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+.historiesList .historyItem .btn-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: red;
+    border-radius: 5px;
+    border: 1px solid red;
+}
+
+.historiesList .historyItem img {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.historiesList .historyItem.selected img{
+    box-shadow: 0px 0px 5px red;
+}
+
+.classInfo button {
+    background-color: #00aff5 !important;
+}
+
+.social-action-btn .button:hover {
+    background: #00aff5;
+}
+
+.useAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
 }

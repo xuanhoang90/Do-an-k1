@@ -9,17 +9,7 @@ export default function Footer(options) {
             <div className="footer-single-item">
               <div className="footer-content">
                 <div className="footer-title">
-                  <h1>Mariya Muskan</h1>
-                </div>
-                <div className="footer-info text-right">
-                  <p>
-                    <i className="fa-solid fa-phone-flip" />
-                    +880 123 (4567) 890
-                  </p>
-                  <span>
-                    <i className="fa-regular fa-envelope-open" />
-                    example@gmail.com
-                  </span>
+                  <h1>Learn calligraphy</h1>
                 </div>
               </div>
             </div>
@@ -28,7 +18,7 @@ export default function Footer(options) {
             <div className="footer-logo">
               <a href="index.html">
                 {" "}
-                <img width={200} src="logo.png" alt="logo" />
+                <img width={200} src="/logo.png" alt="logo" />
               </a>
             </div>
           </div>
@@ -36,19 +26,17 @@ export default function Footer(options) {
             <div className="footer-single-item2">
               <div className="footer-content">
                 <div className="footer-title">
-                  <h1>Munim Mursalin</h1>
-                </div>
-                <div className="footer-info">
-                  <p>
-                    <i className="fa-solid fa-phone-flip" />
-                    +880 123 (4567) 890
-                  </p>
-                  <span>
-                    <i className="fa-regular fa-envelope-open" />
-                    example@gmail.com
-                  </span>
+                  <h1>Social network</h1>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row mt-5">
+          <div className="col-lg-12 col-md-12">
+            <div className="footer-copyright">
+              <p className='text-center'>Copyright @ 2024 Calligraphy.website. All rights reserved.</p>
             </div>
           </div>
         </div>

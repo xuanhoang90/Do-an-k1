@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Section2() {
   return (
@@ -25,9 +26,8 @@ export default function Section2() {
                 </div>
                 <div className="service-content cursor-scale">
                   <h1 className="service-title">
-                    <a href="service-details.html">Chinese Calligraphy</a>
+                    <Link to={'/blog/vi'}>Vietnamese Calligraphy</Link>
                   </h1>
-                  <h5 className="service-sub-title">Chinese characters</h5>
                 </div>
               </div>
             </div>
@@ -38,9 +38,8 @@ export default function Section2() {
                 </div>
                 <div className="service-content cursor-scale">
                   <h1 className="service-title">
-                    <a href="service-details.html">Japanese Calligraphy</a>
+                    <Link to={'/blog/zh'}>Chinese Calligraphy</Link>
                   </h1>
-                  <h5 className="service-sub-title">Shodo</h5>
                 </div>
               </div>
             </div>
@@ -51,9 +50,8 @@ export default function Section2() {
                 </div>
                 <div className="service-content cursor-scale">
                   <h1 className="service-title">
-                    <a href="service-details.html">Korean Calligraphy</a>
+                    <Link to={'/blog/gu'}>Indian Calligraphy</Link>
                   </h1>
-                  <h5 className="service-sub-title">Seoye</h5>
                 </div>
               </div>
             </div>

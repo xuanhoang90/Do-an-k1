@@ -6,11 +6,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
+
+    const TYPE_ADMIN = 1;
+    const TYPE_STUDENT = 2;
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +28,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'status',
     ];
 
     /**
@@ -44,5 +53,42 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->type == self::TYPE_ADMIN;
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function getUserTypeName(): string
+    {
+        return $this->isAdmin()? 'Admin' : 'Student';
+    }
+
+    public function getStatusName(): string
+    {
+        return $this->status == self::STATUS_ACTIVE ? 'Active' : 'Banned';
+    }
+
+    public function isActive()
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function blockUser()
+    {
+        $this->status = self::STATUS_INACTIVE;
+        $this->save();
+    }
+
+    public function unblockUser()
+    {
+        $this->status = self::STATUS_ACTIVE;
+        $this->save();
     }
 }

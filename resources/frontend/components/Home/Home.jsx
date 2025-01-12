@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from "../commons/Header";
+import Header from "../Commons/Header";
 import Footer from '../Commons/Footer';
 import Section1 from './Partials/Section1';
 import Section2 from './Partials/Section2';
@@ -15,10 +15,10 @@ export default function Home(options) {
 
       <Section1 />
       <Section2 />
-      <Section3 />
+      {/* <Section3 />
       <Section4 />
       <Section5 />
-      <Section6 />
+      <Section6 /> */}
 
       <Footer />
     </>
