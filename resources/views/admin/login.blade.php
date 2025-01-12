@@ -25,6 +25,10 @@
             <label class="text-normal text-dark form-label">Password</label>
             <input type="password" class="form-control" name="password" placeholder="Password">
           </div>
+          <div class="mb-3">
+            {!! NoCaptcha::renderJs() !!}
+            {!! NoCaptcha::display() !!}
+          </div>
           <div class="">
             <div class="peers ai-c jc-sb fxw-nw">
               <div class="peer">

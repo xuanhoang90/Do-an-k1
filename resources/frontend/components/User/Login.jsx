@@ -4,19 +4,33 @@ import Footer from "../Commons/Footer";
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../features/auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';// Import thư viện reCAPTCHA
 
 export default function Login () {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [recaptchaValue, setRecaptchaValue] = useState(null);// Lưu giá trị reCAPTCHA
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, loading, error } = useSelector((state) => state.auth);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(login({ email, password }));
+ // Xử lý thay đổi khi reCAPTCHA được hoàn thành
+  const handleRecaptchaChange = (value) => {
+    setRecaptchaValue(value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Kiểm tra xem người dùng đã hoàn thành reCAPTCHA chưa
+    if (!recaptchaValue) {
+      alert("Please complete the reCAPTCHA");
+      return;
+    }
+    dispatch(login({ email, password,  recaptcha: recaptchaValue}));
+  };
+
+  
   useEffect(() => {
     if (token) {
       navigate('/'); // Redirect to home page after login
@@ -82,6 +96,12 @@ export default function Login () {
                           id="login-password"
                           placeholder="Enter password"
                           onChange={(e) => setPassword(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <ReCAPTCHA
+                          sitekey="6LdUlbQqAAAAAESvjQmSI3JOp07d6pvnNN_bECpf"  // Thay bằng Site Key của bạn
+                          onChange={handleRecaptchaChange}
                         />
                       </div>
                       <div className="submit-button">

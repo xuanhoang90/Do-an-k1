@@ -49,6 +49,10 @@ class UserController
      */
     public function store(CreateUserRequest $request)
     {
+        $request->validate([
+            'g-recaptcha-response' => 'required|captcha',  // Xác thực reCAPTCHA
+        ]);
+
         $user = new User();
         $user->name = $request->get('name') ?? 'NO NAME';
         $user->email = $request->get('email');
