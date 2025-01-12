@@ -17,5 +17,6 @@ import './datepicker';
 import './email';
 import './googleMaps';
 import './utils';
+import './admin/post';
 import './admin/common';
 import './admin/ckeditor-config';
