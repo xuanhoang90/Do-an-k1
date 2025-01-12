@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="bgc-white bd bdrs-3 p-20 mB-20">
-        <h4 class="c-grey-900 mB-20">Danh sach lesson</h4>
+        <h4 class="c-grey-900 mB-20">Lesson List</h4>
 
         <a class="btn btn-success" href="{{ route('admin.lesson.create') }}">Create lesson</a>
 

@@ -54,13 +54,13 @@ use Illuminate\Support\Str;
         </a>
         <ul class="dropdown-menu">
           <li>
-            <a class='sidebar-link' href="{{ route('admin.user.index') }}">Danh sach user</a>
+            <a class='sidebar-link' href="{{ route('admin.user.index') }}">User List</a>
           </li>
           <li>
-            <a class='sidebar-link' href="{{ route('admin.user.index') }}?type=2">Danh sach hoc vien</a>
+            <a class='sidebar-link' href="{{ route('admin.user.index') }}?type=2">Student List</a>
           </li>
           <li>
-            <a class='sidebar-link' href="{{ route('admin.user.create') }}">Create user</a>
+            <a class='sidebar-link' href="{{ route('admin.user.create') }}">Create User</a>
           </li>
         </ul>
       </li>
@@ -77,10 +77,10 @@ use Illuminate\Support\Str;
         </a>
         <ul class="dropdown-menu">
           <li>
-            <a class='sidebar-link' href="{{ route('admin.category.index') }}">Danh sach category</a>
+            <a class='sidebar-link' href="{{ route('admin.category.index') }}">Category List</a>
           </li>
           <li>
-            <a class='sidebar-link' href="{{ route('admin.category.create') }}">Create category</a>
+            <a class='sidebar-link' href="{{ route('admin.category.create') }}">Create Category</a>
           </li>
         </ul>
       </li>
@@ -97,10 +97,10 @@ use Illuminate\Support\Str;
         </a>
         <ul class="dropdown-menu">
           <li>
-            <a class='sidebar-link' href="{{ route('admin.level.index') }}">Danh sach level</a>
+            <a class='sidebar-link' href="{{ route('admin.level.index') }}">Level List</a>
           </li>
           <li>
-            <a class='sidebar-link' href="{{ route('admin.level.create') }}">Create level</a>
+            <a class='sidebar-link' href="{{ route('admin.level.create') }}">Create Level</a>
           </li>
         </ul>
       </li>
@@ -117,10 +117,10 @@ use Illuminate\Support\Str;
         </a>
         <ul class="dropdown-menu">
           <li>
-            <a class='sidebar-link' href="{{ route('admin.lesson.index') }}">Danh sach lesson</a>
+            <a class='sidebar-link' href="{{ route('admin.lesson.index') }}">Lesson List</a>
           </li>
           <li>
-            <a class='sidebar-link' href="{{ route('admin.lesson.create') }}">Create lesson</a>
+            <a class='sidebar-link' href="{{ route('admin.lesson.create') }}">Create Lesson</a>
           </li>
         </ul>
       </li>
