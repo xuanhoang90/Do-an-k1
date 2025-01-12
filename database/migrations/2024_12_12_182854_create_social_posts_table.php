@@ -20,11 +20,18 @@ return new class extends Migration
             $table->tinyInteger('status')->default(1)->comment('1-Show : 2-Hide');
 
             $table->timestamps();
+<<<<<<< HEAD
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('student_lesson_history_id')->references('id')->on('student_lesson_histories');
+=======
+            // $table->unsignedBigInteger('created_by');
+            // $table->unsignedBigInteger('updated_by');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('lesson_history_id')->references('id')->on('lesson_histories')->onDelete('cascade');
+>>>>>>> 01ce354e1fc89bb1b36d0b823ec8f438cb25201b
         });
     }
 

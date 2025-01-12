@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+<<<<<<< HEAD
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageController;
@@ -14,6 +15,18 @@ use App\Http\Controllers\Client\PracticeController;
 use App\Http\Controllers\Client\SocialPostController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\CheckPracticeController;
+=======
+use App\Http\Controllers\Admin\SocialPostCommentController;
+use App\Http\Controllers\Admin\SocialPostLikeController;
+use App\Http\Controllers\Admin\SocialPostController;
+use App\Http\Controllers\Admin\LessonHistoryController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\NationalController;
+
+
+
+
+>>>>>>> 01ce354e1fc89bb1b36d0b823ec8f438cb25201b
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,6 +56,15 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
         // Route::get('destroy/{id}', 'destroy')->name('destroy');
         Route::get('block-user/{id}', 'blockUser')->name('block-user');
         Route::get('unblock-user/{id}', 'unblockUser')->name('unblock-user');
+    });
+
+    Route::prefix('national')->name('national.')->controller(NationalController::class)->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        Route::post('store', 'store')->name('store');
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::post('update/{id}', 'update')->name('update');
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
     });
 
     Route::prefix('category')->name('category.')->controller(CategoryController::class)->group(function () {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('thumbnail')->nullable();
             $table->string('short_description');
+<<<<<<< HEAD
             $table->longText('content');
 
             $table->unsignedBigInteger('national_id');
@@ -31,6 +32,18 @@ return new class extends Migration
             $table->foreign('national_id')->references('id')->on('nationals');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('level_id')->references('id')->on('levels');
+=======
+            $table->string('thumbnail');
+            $table->string('sample_image');
+            $table->tinyInteger('status')->default(1);
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('level_id')->nullable();
+            // $table->unsignedBigInteger('created_by');
+            // $table->unsignedBigInteger('updated_by');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->timestamps();
+>>>>>>> 01ce354e1fc89bb1b36d0b823ec8f438cb25201b
         });
     }
 

@@ -11,18 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('levels', function (Blueprint $table) {
+        Schema::create('nationals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->timestamps();
-<<<<<<< HEAD
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
-=======
             // $table->unsignedBigInteger('created_by');
             // $table->unsignedBigInteger('updated_by');
->>>>>>> 01ce354e1fc89bb1b36d0b823ec8f438cb25201b
+            $table->timestamps();
         });
     }
 
@@ -31,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('nationals');
     }
 };
