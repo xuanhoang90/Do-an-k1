@@ -68,9 +68,9 @@ class User extends Authenticatable
     public function getUserTypeName(): string
     {
         if($this->id == 1 && $this->isAdmin())
-            {
-                return 'SuperAdmin';
-            }
+        {
+            return 'SuperAdmin';
+        }
         return $this->isAdmin()? 'Admin' : 'Student';
     }
 

@@ -10,7 +10,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class UserController
 {
     /**
@@ -177,7 +176,7 @@ class UserController
         if(($id == 1) || (Auth::user()->id != 1 && $user["type"] == 1)){
             return redirect()->route('admin.user.index')->with('error','You have\'t permission to unblock this user ');
         }
-        
+
         $user->unblockUser();
         return redirect()->route('admin.user.index')->with('success', 'User unblocked successfully.');
     }

@@ -121,7 +121,7 @@ export default function Profile(props) {
                           </label>
                           <div className="d-flex justify-content-center">
                             <img
-                              src={ preview ? preview  : '/Profile.png'}
+                              src={ preview ? preview : (userData?.profile?.avatar || '/Profile.png') }
                               alt="Profile Picture"
                               className="img-thumbnail mb-2"
                               style={{ width: 150, height: 150, objectFit: 'cover' }}
