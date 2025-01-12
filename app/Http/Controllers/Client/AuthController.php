@@ -100,8 +100,6 @@ class AuthController
         $recaptchaResponse = $validatedData['recaptcha'];
         $recaptchaSecret = '6LdUlbQqAAAAAOctcsw8mTHwD4NAO3tzaLuPkjrN'; // Thay thế bằng key của bạn
 
-
-
         // Gửi yêu cầu xác thực reCAPTCHA tới Google
         $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
             'secret' => $recaptchaSecret,

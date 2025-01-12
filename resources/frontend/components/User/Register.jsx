@@ -34,8 +34,7 @@ export default function Register () {
     }
 
     if (data.payload.success) {
-      await dispatch(login({email, password}))
-      navigate('/'); 
+      navigate('/user/login'); 
     }
   };
 
@@ -153,9 +152,10 @@ export default function Register () {
                         }
                       </div>
                       <div className="mb-3">
-                        <ReCAPTCHA 
-                        sitekey="6LdUlbQqAAAAAESvjQmSI3JOp07d6pvnNN_bECpf" onChange={handleRecaptchaChange} />
-                        {errors.recaptcha && <div className="alert alert-danger">{errors.recaptcha}</div>}
+                        <ReCAPTCHA
+                          sitekey="6LdUlbQqAAAAAESvjQmSI3JOp07d6pvnNN_bECpf"  // Thay bằng Site Key của bạn
+                          onChange={handleRecaptchaChange}
+                        />
                       </div>
                       <div className="submit-button">
                         <button type="submit">Register</button>
