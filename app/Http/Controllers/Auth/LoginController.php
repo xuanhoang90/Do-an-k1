@@ -17,6 +17,11 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
+
+        $request->validate([
+            'g-recaptcha-response' => 'required|captcha',  // Xác thực reCAPTCHA
+        ]);
+        
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,

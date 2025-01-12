@@ -48,13 +48,22 @@
 
                   <tr>
                     <td>{{ $user->id }}</td>
-                    <td><img src="{{ asset('storage/' . $user->profile?->avatar) }}" class="coverImage" /></td>
+                    <td><img src="{{ $user->profile?->avatar ? asset('storage/' . $user->profile->avatar) : asset('/Profile.png')}}"  class="coverImage" /></td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->profile?->display_name ?? 'No name' }}</td>
                     <td>{{ $user->profile?->national?->name ?? 'No national' }}</td>
                     <td>{{ $user->profile?->level?->name ?? 'No level' }}</td>
-                    <td>{{ $user->getUserTypeName() }}</td>
+                    <td>
+                        @if($user->getUserTypeName() == 'SuperAdmin' )
+                          <span class="text-danger fw-bold">SuperAdmin</span>
+                        @elseif($user->getUserTypeName() == 'Admin')
+                          <span class="text-primary fw-bold">Admin</span>
+                        @else
+                         <span class="fw-bold">Student</span>
+                        @endif
+                      
+                    </td>
                     <td>{{ $user->getStatusName() }}</td>
                     <td>
                       {{-- <button type="button" class="btn cur-p btn-primary btn-color">View</button> --}}

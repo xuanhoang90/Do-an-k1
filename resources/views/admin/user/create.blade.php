@@ -79,6 +79,10 @@
                     }
                   </select>
                 </div>
+                <div class="mb-3 col-md-12">
+                  {!! NoCaptcha::renderJs() !!}
+                  {!! NoCaptcha::display() !!}
+                </div>
               </div>
 
               <button type="submit" class="btn btn-primary btn-color">Save</button>
