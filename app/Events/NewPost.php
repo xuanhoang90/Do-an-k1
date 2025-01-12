@@ -15,6 +15,11 @@ class NewPost implements ShouldBroadcast
 
     public function __construct($post)
     {
+        if ($post->user && $post->user->avatar) {
+            $userAvatar = $post->user->avatar;
+        } else {
+            $userAvatar = 'default-avatar.png';
+        }
         $this->post = [
             'id' => $post->id,
             'title' => $post->title,
@@ -23,7 +28,7 @@ class NewPost implements ShouldBroadcast
             'created_at' => $post->created_at->format('Y-m-d H:i:s'),
             'student_id' => $post->user_id,
             'student_name' => $post->student->name,
-            'student_avatar' => $post->student->profile->avatar,
+            'student_avatar' => $userAvatar,
             'is_liked' => false,
             'like_count' => 0,
             'comment_count' => 0,

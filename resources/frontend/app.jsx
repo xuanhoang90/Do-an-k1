@@ -11,9 +11,11 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import ProtectedRoute from './components/ProtectedRoute';
 import Loading from "./components/Commons/Loading";
+
 import AppContext from "./utils/AppContext";
 import Register from "./components/User/Register";
 import PracticeHistory from "./components/User/PracticeHistory";
+
 
 function Blog() {
     return <h1>Blog Page</h1>;
@@ -57,7 +59,7 @@ function App() {
 
                     <Route path="*" element={<Navigate to="/user/login" />} />
                 </Routes>
-
+   
             </AppContext>
         </BrowserRouter>
             

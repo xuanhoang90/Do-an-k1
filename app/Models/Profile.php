@@ -17,4 +17,8 @@ class Profile extends Model
     {
         return $this->belongsTo(Level::class);
     }
+
+    public function student(){
+        return $this->belongsTo(User::class);
+    }
 }

@@ -16,6 +16,26 @@ export default function PracticeHistory(options) {
     const userData = useFetch('user/user-info')
     const practiceHistories = useFetch('user/practice-histories')
 
+    const handleRemovePost =  async (id) => {
+        if (window.confirm("Are you sure you want to remove this post?")) {
+            try {
+                const response = await fetch(`/api/practice-histories/${id}/pending`, {
+                    method: "DELETE",
+                });
+                const result = await response.json();
+            if (response.ok && result.success) {
+                alert(result.message);
+                window.location.reload();
+            } else {
+                alert(result.message || "Failed to remove the post.");
+            }
+        } catch (error) {
+            console.error("Error removing post:", error);
+            alert("An error occurred while removing the post.");
+        }
+    }
+};
+
     return (
         <>
             <Header />
@@ -71,13 +91,23 @@ export default function PracticeHistory(options) {
                             {
                                 practiceHistories?.length > 0 ? 
                                 practiceHistories.map(history => (
+                                    history.type !== 2 && (
                                     <div key={history.id} className="row mb-3">
                                         <div className="col-md-3">{ history.created_at.split('T')[0] } : { history.created_at.split('T')[1].split('.')[0] }</div>
                                         <div className="col-md-6">
                                             Lesson: { history.lesson.title }
                                             <img style={{'display': 'block', 'width': '100%'}} src={history.image} />
+                                            <p>Status: {history.type === 2 ? "Pending" : "Accepted"}</p>
                                         </div>
                                         <div className="col-md-3">
+                                        {history.type === 2 && (
+                                                        <button
+                                                            className="button btn-danger"
+                                                            onClick={() => handleRemovePost(history.id)}
+                                                        >
+                                                            Remove
+                                                        </button>
+                                                    )}
                                             <div className="submit-button">
                                                 <Link className="button" to={'/lesson/' + history.lesson.slug}>View lesson</Link>
                                             </div>
@@ -86,7 +116,8 @@ export default function PracticeHistory(options) {
                                             </div> */}
                                         </div>
                                     </div>
-                                )) : 
+                                    )
+                                )) :
                                 <p>No practice history found.</p>
                             }
                             

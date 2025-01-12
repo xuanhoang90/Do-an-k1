@@ -60,7 +60,7 @@
                         @elseif($user->getUserTypeName() == 'Admin')
                           <span class="text-primary fw-bold">Admin</span>
                         @else
-                         <span class="fw-bold">Student</span>
+                        <span class="fw-bold">Student</span>
                         @endif
                       
                     </td>

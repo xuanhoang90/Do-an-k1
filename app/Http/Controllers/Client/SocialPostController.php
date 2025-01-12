@@ -8,18 +8,22 @@ use App\Models\SocialPostComment;
 use App\Models\SocialPostLike;
 use Illuminate\Http\Request;
 
+
 class SocialPostController
 {
     public function getSocialPost(Request $request)
     {
-        $socialPost = SocialPost::orderBy('id', 'desc')->get();
-
+        $socialPost = SocialPost::where('status','1')
+        ->orderBy('id', 'desc')
+        ->get();
+        
         $res = [];
         foreach ($socialPost as $post) {
             $res[] = [
                 'id' => $post->id,
                 'title' => $post->title,
                 'content' => $post->content,
+                'felling' => $post->felling,
                 'thumbnail' => $post->studentLessonHistory->image,
                 'created_at' => $post->created_at->format('Y-m-d H:i:s'),
                 'student_id' => $post->user_id,
@@ -109,3 +113,4 @@ class SocialPostController
         return response()->json(['success' => 'OK']);
     }
 }
+

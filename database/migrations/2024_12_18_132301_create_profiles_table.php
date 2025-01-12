@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('address')->nullable();
 
-            $table->unsignedBigInteger('level_id');
-            $table->unsignedBigInteger('national_id');
+                $table->unsignedBigInteger('level_id');
+                $table->unsignedBigInteger('national_id');
 
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();

@@ -13,7 +13,9 @@ use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\PracticeController;
 use App\Http\Controllers\Client\SocialPostController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\Admin\CheckPracticeController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/admin/login', [LoginController::class, 'loginPage'])->name('admin.login-page');
 Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.submit-login');
@@ -27,7 +29,11 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
     Route::prefix('dashboard')->name('dashboard.')->controller(DashboardController::class)->group(function () {
         Route::get('index', 'index')->name('index');
     });
-
+    Route::prefix('post')->name('post.')->controller(CheckPracticeController::class)->group(function () {
+        Route::get('index', 'showPost')->name('index');
+        Route::post('approve/{postId}', 'approvePost')->name('approve');
+        Route::delete('reject/{postId}', 'rejectPost')->name('reject');
+    });
     Route::prefix('user')->name('user.')->controller(UserController::class)->group(function () {
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
@@ -89,7 +95,7 @@ Route::prefix('api')->group(function () {
         Route::get('/practice-histories', [PracticeController::class, 'getPracticeHistories'])->name('getPracticeHistories');
         Route::post('/save-practice', [PracticeController::class, 'savePractice'])->name('savePractice');
         Route::post('/remove-practice-history', [PracticeController::class, 'removePracticeHistory'])->name('removePracticeHistory');
-        Route::post('/share-practice', [PracticeController::class, 'sharePractice'])->name('sharePractice');
+        Route::post('/share-practice', [PracticeController::class, 'sharePractice'])->name('sharePractice'); 
 
         Route::get('/social-post', [SocialPostController::class, 'getSocialPost'])->name('getSocialPost');
         Route::post('/like-post', [SocialPostController::class, 'likePost'])->name('likePost');
