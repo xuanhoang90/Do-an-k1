@@ -29,6 +29,7 @@ class CheckPracticeController
         if ($post->student && $post->student->type === User::TYPE_STUDENT) {
             $post->status = SocialPost::STATUS_SHOW;
             $post->type = SocialPost::TYPE_APPROVED;
+          
         $post->save();
         event(new AdminRepondedPost($post));
         

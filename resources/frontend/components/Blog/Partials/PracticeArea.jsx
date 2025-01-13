@@ -205,12 +205,10 @@ export default function PracticeArea ({closeModal, lesson}) {
             formData.append("title", shareData.title);
             formData.append("content", shareData.content);
             formData.append("feeling", shareData.feeling);
-           
             formData.append("share_after_save", true);
             const res = await postData("user/save-practice", formData);
             if (res && res.success) {
                 alert(
-                    formData.append('status',shareData.status),
                     "The post has been sent to the admin for review, please wait!"
                 );
                 setIsModalShareOpen(false);
@@ -330,7 +328,7 @@ export default function PracticeArea ({closeModal, lesson}) {
                                     src={cavasSrc}
                                     alt="Your Drawing"
                                     style={{
-                                        width: "60%",
+                                        width: "30%",
                                         borderRadius: "4px",
                                         border: "2px solid #ccc",
                                         marginBottom: "20px",

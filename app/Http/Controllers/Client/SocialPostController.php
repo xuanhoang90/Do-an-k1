@@ -24,6 +24,7 @@ class SocialPostController
                 'title' => $post->title,
                 'content' => $post->content,
                 'feeling' => $post->feeling,
+                'type' => $post->type,
                 'thumbnail' => $post->studentLessonHistory->image,
                 'created_at' => $post->created_at->format('Y-m-d H:i:s'),
                 'student_id' => $post->user_id,

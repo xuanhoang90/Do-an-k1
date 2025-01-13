@@ -12,6 +12,7 @@ export default function Content() {
   const [showModal, setShowModal] = useState(false)
   const [posts, setPosts] = useState([])
 
+
   const openModal = () => {
     setShowModal(true)
   }
@@ -45,44 +46,51 @@ export default function Content() {
 
 
   useEffect(() => {
-    Pusher.logToConsole = true; 
+    Pusher.logToConsole = true;
     const pusher = new Pusher("43cd5ffabe75e89fc509", {
         cluster: "ap1",
     });
-
     const channel = pusher.subscribe("my-channel");
-
-    channel.bind("new-post", (data) => {
+    channel.bind("pusher:subscription_succeeded", () => {
+        console.log("Successfully subscribed to channel: my-channel");
+    });
+    channel.bind("my-confirmed", (data) => {
         console.log("Received event:", data);
 
-        if (data?.post) {
-            if (data.post.status === 1) {
-                toastr.success(
-                    `Post approved: ${data.post.title}`,
-                    "Success",
-                    {
-                        closeButton: true,
-                        progressBar: true,
-                        positionClass: "toast-top-right",
-                        timeOut: 5000,
-                    }
-                );
-            } else {
-                toastr.error(
-                    `Post rejected: ${data.post.title}`,
-                    "Error",
-                    {
-                        closeButton: true,
-                        progressBar: true,
-                        positionClass: "toast-top-right",
-                        timeOut: 5000,
-                    }
-                );
-            }
+        if (data?.type === 3) {
+            toastr.error(
+                `Post rejected: ${data.title}`,
+                "Rejection Notice",
+                {
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-top-right",
+                    timeOut: 5000,
+                    onclick: () => {
+                        console.log("Rejection clicked!");
+                    },
+                }
+            );
+        } else if (data?.type === 2) {
+            toastr.success(
+                `Post approved: ${data.title}`,
+                "Approval Notice",
+                {
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-top-right",
+                    timeOut: 5000,
+                    onclick: () => {
+                        window.location.href = `/posts/${data.id}`;
+                    },
+                }
+            );
         }
     });
+
     return () => {
-        channel.unbind("new-post");
+        channel.unbind("pusher:subscription_succeeded");
+        channel.unbind("my-confirmed");
         pusher.unsubscribe("my-channel");
     };
 }, []);

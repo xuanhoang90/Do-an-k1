@@ -17,33 +17,35 @@ class AdminRepondedPost implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct($post)
-    {
-        $this->post = $post;
-    }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
-    public function broadcastOn(): array
-    {
-        return [new Channel('my-channel')];
-    }
 
-    public function broadcastAs(){
-        return 'new-post';
-    }
+  public function __construct($post)
+  {
+      $this->post = $post;
+  }
 
-    public function broadcastWith(){
-        return [
-            'post_id' => $this->post->id,
-            'status' => $this->post->status,
-            'user_id' => $this->post->user_id, // Gửi user_id để client xác định
-            'message' => $this->post->status === 1
-                ? 'Your post has been approved.'
-                : 'Your post has been rejected.',
-        ];
-    }
+  public function broadcastOn()
+  {
+    return ['my-channel'];
+  }
+
+public function broadcastAs(){
+    return  'my-confirmed';
+}
+
+  public function broadcastWith(){
+    return [
+      'id' => $this->post->id,
+      'title' => $this->post->title,
+      'content' => $this->post->content,
+      'thumbnail' => optional($this->post->studentLessonHistory)->image,
+      'created_at' => $this->post->created_at->format('Y-m-d H:i:s'),
+      'student_id' => $this->post->user_id,
+      'type' => $this->post->type,
+      'student_name' => optional($this->post->student)->name,
+      'student_avatar' => optional($this->post->student->profile)->avatar,
+      'is_liked' => false,
+  ];
+  }
+  
 }

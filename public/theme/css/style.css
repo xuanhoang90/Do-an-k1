@@ -4328,6 +4328,114 @@ p.details-desc,
 .profile-page label {
     color: black;
 }
+.myModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* Nền tối mờ */
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.initModal {
+    background: #ffffff;
+    width: 80%; /* Giảm kích thước khung modal */
+    max-width: 450px; /* Giới hạn chiều rộng tối đa */
+    border-radius: 10px;
+    padding: 15px; /* Giảm khoảng cách bên trong */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out; /* Hiệu ứng mở modal */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.initModal h3 {
+    font-size: 20px; 
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.initModal img {
+    max-width: 100%;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.initModal label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    text-align: left;
+}
+
+.initModal input,
+.initModal textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px; /* Giảm khoảng cách bên trong */
+    font-size: 13px; /* Giảm kích thước chữ */
+    margin-bottom: 10px; /* Giảm khoảng cách giữa các trường */
+    box-sizing: border-box;
+}
+
+.initModal textarea {
+    resize: none; /* Không cho resize textarea */
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px; /* Giảm khoảng cách phía trên */
+}
+
+.modal-actions button {
+    padding: 8px 15px; /* Giảm kích thước nút */
+    font-size: 13px; /* Giảm kích thước chữ */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-actions button.cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.modal-actions button.cancel:hover {
+    background-color: #d32f2f;
+}
+
+.modal-actions button {
+    background-color: #6a63f5;
+    color: white;
+}
+
+.modal-actions button:hover {
+    background-color: #6a63f5;
+}
+
 
 .myModal {
     display: block;
@@ -4345,7 +4453,7 @@ p.details-desc,
     background: white;
     padding: 20px;
     border-radius: 5px;
-    width: 90%;
+    width: 65%;
     max-width: 1200px;
     display: block;
     margin: 50px auto;
