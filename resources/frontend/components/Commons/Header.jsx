@@ -15,7 +15,6 @@ export default function Header(options) {
     const { token } = useSelector((state) => state.auth);
     const nationals = useFetch("get-nationals");
 
-    // Giả sử có thông báo trong Redux hoặc từ API
     const notifications = useSelector((state) => state.notifications); // Lấy danh sách thông báo từ Redux (hoặc API)
 
     const hasNotifications = notifications?.length > 0;

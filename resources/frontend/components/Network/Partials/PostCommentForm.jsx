@@ -7,7 +7,7 @@ export default function PostCommentForm({ postId, parentId }) {
     const vietnameseBadWords = ["lồn", "lol", "cặc", "địt", "đỉ", "cằc", "đụ"];
     const filter = new Filter();
     filter.addWords(...vietnameseBadWords);
-    console.log(filter.list);
+    // console.log(filter.list);
 
     const handlePostComment = () => {
         // Kiểm tra nội dung bình luận có chứa từ thô tục không

@@ -75,6 +75,9 @@ export default function PostComment({ post }) {
                                                     src={
                                                         "/storage/" +
                                                         comment.student_avatar
+                                                            ? "/avata.png"
+                                                            : "/storage/" +
+                                                              comment.student_avatar
                                                     }
                                                     alt=""
                                                 />
