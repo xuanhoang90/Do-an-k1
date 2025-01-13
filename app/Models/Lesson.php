@@ -14,6 +14,15 @@ class Lesson extends Model
     public $samples;
     public $isLearned;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'status',
+        'national_id',
+        'category_id',
+        'level_id',
+    ];
+
     public function getStatusName()
     {
         $status = [
@@ -21,7 +30,7 @@ class Lesson extends Model
             self::STATUS_HIDE => 'Hide',
         ];
 
-        return isset($status[$this->status]) ? $status[$this->status] : 'Unknown';
+        return array_key_exists($this->status, $status) ? $status[$this->status] : 'Unknown';
     }
 
     public function national()

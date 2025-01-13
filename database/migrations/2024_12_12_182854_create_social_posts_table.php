@@ -17,17 +17,16 @@ return new class extends Migration
             $table->unsignedBigInteger('student_lesson_history_id');
             $table->string('title');
             $table->text('content')->nullable();
-            $table->tinyInteger('status')->default(1)->comment('1-Show : 2-Hide');
-
+            $table->string('feeling')->nullable();
+            $table->tinyInteger('type')->default(1)->comment('1-Pending - 2-Approve - 3-Reject');
+            $table->tinyInteger('status')->default(1)->comment('1-Hide - 2-Show');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
-
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('student_lesson_history_id')->references('id')->on('student_lesson_histories');
         });
     }
-
     /**
      * Reverse the migrations.
      */

@@ -18,6 +18,14 @@ export default function PracticeArea ({closeModal, lesson}) {
     const [updateHistory, setUpdateHistory] = useState(null);
     const { loading, setLoading } = useContext(Context)
     const [shareAfterSave, setShareAfterSave] = useState(false)
+    const [isModalShareOpen, setIsModalShareOpen] = useState(false);
+    const [cavasSrc, setCavasSrc] = useState(null);
+
+    const [shareData, setShareData] = useState({
+        title: '',
+        content: '',
+        feeling: '',
+    });
 
     const colors = [
         '#000000',
@@ -180,10 +188,38 @@ export default function PracticeArea ({closeModal, lesson}) {
         }
     }
 
-    const handleShare = async () => {
-        setShareAfterSave(true)
-        await postCanvasImage();
-    }
+    const handleShare = () => {
+        const canvas = canvasRef.current;
+        const canvasDataUrl = canvas.toDataURL("image/png");
+        setCavasSrc(canvasDataUrl);
+        setIsModalShareOpen(true);
+    };
+
+    const submitShare = async () => {
+        setLoading(true);
+        const canvas = canvasRef.current;
+        canvas.toBlob(async (blob) => {
+            const formData = new FormData();
+            formData.append("image", blob, "canvas-image.png");
+            formData.append("lesson_id", lesson.id);
+            formData.append("title", shareData.title);
+            formData.append("content", shareData.content);
+            formData.append("feeling", shareData.feeling);
+           
+            formData.append("share_after_save", true);
+            const res = await postData("user/save-practice", formData);
+            if (res && res.success) {
+                alert(
+                    formData.append('status',shareData.status),
+                    "The post has been sent to the admin for review, please wait!"
+                );
+                setIsModalShareOpen(false);
+                setTriggerHistory(triggerHistory + 1);
+            }
+            setLoading(false);
+        }, "image/png");
+    
+    };
 
     return (
         <>
@@ -282,6 +318,77 @@ export default function PracticeArea ({closeModal, lesson}) {
                     </div>
                 </div>
             </div>
+
+            {isModalShareOpen && (
+                <div className="myModal">
+                    <div className="initModal">
+                        <h3>Posts are shared</h3>
+
+                        {cavasSrc && (
+                            <div>
+                                <img
+                                    src={cavasSrc}
+                                    alt="Your Drawing"
+                                    style={{
+                                        width: "60%",
+                                        borderRadius: "4px",
+                                        border: "2px solid #ccc",
+                                        marginBottom: "20px",
+                                    }}
+                                />
+                            </div>
+                        )}
+                        <div>
+                            <label>Title</label>
+                            <input
+                                type="text"
+                                value={shareData.title}
+                                onChange={(e) =>
+                                    setShareData({
+                                        ...shareData,
+                                        title: e.target.value,
+                                    })
+                                }
+                            />
+                        </div>
+                        <div>
+                            <label>Feeling</label>
+                            <textarea
+                                rows="3"
+                                value={shareData.feeling}
+                                onChange={(e) =>
+                                    setShareData({
+                                        ...shareData,
+                                        feeling: e.target.value,
+                                    })
+                                }
+                            />
+                        </div>
+                        <div>
+                            <label>Content:</label>
+                            <textarea
+                                rows="3"
+                                value={shareData.content}
+                                onChange={(e) =>
+                                    setShareData({
+                                        ...shareData,
+                                        content: e.target.value,
+                                    })
+                                }
+                            />
+                        </div>
+                        <div className="modal-actions">
+                            <button
+                                className="cancel"
+                                onClick={() => setIsModalShareOpen(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button onClick={submitShare}>Share</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 }

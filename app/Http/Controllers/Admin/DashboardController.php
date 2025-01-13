@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
 use App\Models\Lesson;
+use App\Models\SocialPost;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,8 @@ class DashboardController
         $totalCategories = Category::count();
         $totalLessons = Lesson::count();
         $totalStudents = User::where(['type' => User::TYPE_STUDENT])->count();
-        $totalSocialPosts = 0; // Assuming social posts are tracked in another table or database.
+        $totalSocialPosts = SocialPost::where(['status'  => SocialPost::TYPE_APPROVED])->count();
+      
 
         return view('admin.dashboard.index', compact('totalUsers', 'totalCategories', 'totalLessons', 'totalStudents', 'totalSocialPosts'));
     }

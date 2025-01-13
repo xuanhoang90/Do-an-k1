@@ -10,7 +10,7 @@ export default function Header(options) {
         dispatch(logout());
     };
 
-    const { token } = useSelector((state) => state.auth);
+    const { token, user } = useSelector((state) => state.auth);
     const nationals = useFetch('get-nationals')
 
     return (
@@ -89,9 +89,9 @@ export default function Header(options) {
                                     <nav className="lavewell_menu">
                                         <ul className="nav_scroll">
                                             <li>
-                                                <a className="cursor-scale">
-                                                    User
-                                                </a>
+                                            <a className="cursor-scale">
+                                                {user?.name || "User"}
+                                            </a>
                                                 <ul className="sub-menu">
                                                     <li>
                                                         <Link

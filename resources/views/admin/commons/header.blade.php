@@ -26,13 +26,19 @@
           </div>
         </a>
         <ul class="dropdown-menu fsz-sm" aria-labelledby="dropdownMenuLink">
+        <li>
+            <a href="{{ route('admin.post.index') }}"
+              class="d-b td-n pY-5 bgcH-grey-100 c-grey-700 position-relative">
+              <i class="ti-bell mR-10"></i>
+              <span>Notifications</span>
+            </a>
+          </li>
           <li>
             <a href="{{ route('admin.user.edit', auth()->user()->id) }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
               <i class="ti-user mR-10"></i>
               <span>Profile</span>
             </a>
           </li>
-
           <li role="separator" class="divider"></li>
           <li>
             <a href="{{ route('admin.logout') }}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">

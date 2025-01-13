@@ -33,30 +33,38 @@ class PracticeController
 
         $studentLessonHistory->save();
 
-        if ($request->has('share_after_save') && $request->share_after_save) {
-            $this->shareToSocial($studentLessonHistory);
+        if ($request->boolean('share_after_save')) {
+            $this->shareToSocial($studentLessonHistory, $request->only(['title', 'content', 'feeling']));
         }
 
-        $studentLessonHistory->image = config('app.url') .'/storage/'. $studentLessonHistory->image;
+        $studentLessonHistory->image = config('app.url') . '/storage/' . $studentLessonHistory->image;
 
         return response()->json(['success' => 'OK', 'data' => $studentLessonHistory]);
     }
 
-    private function shareToSocial($history)
+    private function shareToSocial($history,$input)
     {
-        if (SocialPost::hasPostOfStudentHistory($history->id)) {
+        $existingPost = SocialPost::where('student_lesson_history_id', $history->id)->first();
+
+        if ($existingPost && $existingPost->status == 1){
+            broadcast(new NewPost($existingPost))->toOthers();
             return;
         }
 
-        $socialPost = new SocialPost();
+        $socialPost = $existingPost ?? new SocialPost();
         $socialPost->user_id = $history->user_id;
         $socialPost->student_lesson_history_id = $history->id;
-        $socialPost->title = 'I just completed the practice of ' . $history->lesson->title;
-        $socialPost->content = $history->lesson->short_description;
+        $socialPost->title = $input['title'];
+        $socialPost->content =  $input['content'];
+        $socialPost->feeling = $input['feeling'];
+        $socialPost->status =1;
         $socialPost->save();
 
         broadcast(new NewPost($socialPost))->toOthers();
     }
+    
+  
+    
 
     public function getPracticeHistories(Request $request)
     {
@@ -72,7 +80,7 @@ class PracticeController
             ->orderBy('id', 'desc')->get();
 
         foreach ($histories as $history) {
-            $history->image = config('app.url') .'/storage/'. $history->image;
+            $history->image = config('app.url') . '/storage/' . $history->image;
         }
 
         return response()->json($histories);
@@ -96,8 +104,12 @@ class PracticeController
     public function sharePractice(Request $request)
     {
         $practiceHistory = StudentLessonHistory::findOrFail($request->get('id'));
-        $this->shareToSocial($practiceHistory);
+        $input = $request->only(['title', 'content', 'feeling']);
+        $this->shareToSocial($practiceHistory, $input);
 
         return response()->json(['success' => 'OK']);
+
     }
+    
+
 }
