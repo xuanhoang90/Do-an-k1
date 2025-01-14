@@ -7,15 +7,37 @@ use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Http;
 class AuthController
 {
     public function login(Request $request)
     {
+
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'recaptcha' => 'required',  // Validate reCAPTCHA response
         ]);
+
+        // Kiểm tra reCAPTCHA
+        $recaptchaSecret = '6LdUlbQqAAAAAOctcsw8mTHwD4NAO3tzaLuPkjrN'; // Thay bằng Secret Key của bạn
+        $recaptchaResponse = $request->get('recaptcha');
+
+        // Gửi yêu cầu xác thực reCAPTCHA đến Google
+        $recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify';
+        $response = Http::asForm()->post($recaptchaUrl, [
+            'secret' => $recaptchaSecret,
+            'response' => $recaptchaResponse
+        ]);
+
+        // Kiểm tra kết quả xác thực reCAPTCHA
+        $recaptchaData = $response->json();
+        if (!$recaptchaData['success']) {
+            return response()->json([
+                'success' => false,
+                'message' => 'reCAPTCHA verification failed'
+            ], 400);
+        }
 
         if (Auth::attempt([
             'email' => $request->get('email'),
@@ -71,7 +93,24 @@ class AuthController
             'name' =>'required|string|max:255',
             'email' =>'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'recaptcha' => 'required|string',
         ]);
+
+         // Lấy dữ liệu reCAPTCHA từ request
+        $recaptchaResponse = $validatedData['recaptcha'];
+        $recaptchaSecret = '6LdUlbQqAAAAAOctcsw8mTHwD4NAO3tzaLuPkjrN'; // Thay thế bằng key của bạn
+
+        // Gửi yêu cầu xác thực reCAPTCHA tới Google
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => $recaptchaSecret,
+            'response' => $recaptchaResponse,
+        ]);
+
+        // Kiểm tra kết quả xác thực reCAPTCHA
+        $recaptchaData = $response->json();
+        if (!$recaptchaData['success']) {
+            return response()->json(['message' => 'reCAPTCHA verification failed'], 422);
+        }
 
         $user = User::create([
             'name' => $validatedData['name'],

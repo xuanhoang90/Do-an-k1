@@ -16,6 +16,13 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(
             [
                 [
+                    'name' => 'SuperAdmin',
+                    'email' => 'superadmin@caligraphy.com',
+                    'password' => Hash::make('12345678'),
+                    'type' => 1,
+                    'status' => 1,
+                ],
+                [
                     'name' => 'Admin',
                     'email' => 'admin@caligraphy.com',
                     'password' => Hash::make('12345678'),

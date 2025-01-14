@@ -4,12 +4,14 @@ import Footer from "../Commons/Footer";
 import { useDispatch, useSelector } from 'react-redux';
 import { register, login } from '../../features/auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Register () {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [recaptchaValue, setRecaptchaValue] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, loading, error } = useSelector((state) => state.auth);
@@ -17,7 +19,13 @@ export default function Register () {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let data = await dispatch(register({ name, email, password, passwordConfirmation }));
+
+    if (!recaptchaValue) {
+      setErrors({ recaptcha: 'Please verify reCAPTCHA' });
+      return;
+    }
+
+    let data = await dispatch(register({ name, email, password, passwordConfirmation, recaptcha: recaptchaValue}));
 
     if (data.payload.errors) {
       setErrors(data.payload.errors);
@@ -26,8 +34,7 @@ export default function Register () {
     }
 
     if (data.payload.success) {
-      await dispatch(login({email, password}))
-      closeModal()
+      navigate('/user/login'); 
     }
   };
 
@@ -37,10 +44,14 @@ export default function Register () {
     }
   }, [token, navigate]);
 
+
+  const handleRecaptchaChange = (value) => {
+    setRecaptchaValue(value);
+  };
+
   return (
     <>
       <Header />
-
       <div className="container mt-5 profile-page">
           <div className="row">
               {/* Sidebar */}
@@ -139,6 +150,12 @@ export default function Register () {
                         {
                           errors.password_confirmation && <div className="alert alert-danger">{errors.password_confirmation}</div>
                         }
+                      </div>
+                      <div className="mb-3">
+                        <ReCAPTCHA
+                          sitekey="6LdUlbQqAAAAAESvjQmSI3JOp07d6pvnNN_bECpf"  // Thay bằng Site Key của bạn
+                          onChange={handleRecaptchaChange}
+                        />
                       </div>
                       <div className="submit-button">
                         <button type="submit">Register</button>

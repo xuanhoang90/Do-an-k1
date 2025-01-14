@@ -12,14 +12,18 @@ class SocialPostController
 {
     public function getSocialPost(Request $request)
     {
-        $socialPost = SocialPost::orderBy('id', 'desc')->get();
+        $socialPosts = SocialPost::where('status', '2')
+        ->orderBy('id', 'desc')
+        ->get();
 
+       
         $res = [];
-        foreach ($socialPost as $post) {
+        foreach ($socialPosts as $post){
             $res[] = [
                 'id' => $post->id,
                 'title' => $post->title,
                 'content' => $post->content,
+                'feeling' => $post->feeling,
                 'thumbnail' => $post->studentLessonHistory->image,
                 'created_at' => $post->created_at->format('Y-m-d H:i:s'),
                 'student_id' => $post->user_id,
@@ -30,7 +34,7 @@ class SocialPostController
                 'comment_count' => $post->comments->count(),
             ];
         }
-
+    
         return response()->json($res);
     }
 

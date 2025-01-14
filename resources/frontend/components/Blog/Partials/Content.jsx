@@ -4,6 +4,8 @@ import RegisterForm from "./RegisterForm";
 import { getData } from "../../../utils/api";
 import { useDispatch, useSelector } from 'react-redux';
 import useFetch from "../../../hooks/useFetch";
+import Pusher from "pusher-js";
+import toastr from "toastr";
 
 export default function Content() {
   const { language, category, level } = useParams();
@@ -40,6 +42,51 @@ export default function Content() {
 
   const categories = useFetch('get-categories')
   const levels = useFetch('get-levels')
+
+
+  useEffect(() => {
+    Pusher.logToConsole = true; 
+    const pusher = new Pusher("43cd5ffabe75e89fc509", {
+        cluster: "ap1",
+    });
+
+    const channel = pusher.subscribe("my-channel");
+
+    channel.bind("new-post", (data) => {
+        console.log("Received event:", data);
+
+        if (data?.post) {
+            if (data.post.status === 1) {
+                toastr.success(
+                    `Post approved: ${data.post.title}`,
+                    "Success",
+                    {
+                        closeButton: true,
+                        progressBar: true,
+                        positionClass: "toast-top-right",
+                        timeOut: 5000,
+                    }
+                );
+            } else {
+                toastr.error(
+                    `Post rejected: ${data.post.title}`,
+                    "Error",
+                    {
+                        closeButton: true,
+                        progressBar: true,
+                        positionClass: "toast-top-right",
+                        timeOut: 5000,
+                    }
+                );
+            }
+        }
+    });
+    return () => {
+        channel.unbind("new-post");
+        pusher.unsubscribe("my-channel");
+    };
+}, []);
+
 
   return (
     <>

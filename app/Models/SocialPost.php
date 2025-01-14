@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class SocialPost extends Model
 {
-    protected $table = 'social_posts';
+    const STATUS_SHOW = 2;
+    const STATUS_HIDE = 1;
+    const TYPE_APPROVED =2;
+    const TYPE_REJECTED =3;
+    const TYPE_PENDING = 1;
+    
+    protected $table='social_posts';
+    
 
     public function studentLessonHistory()
     {
@@ -32,4 +39,6 @@ class SocialPost extends Model
     {
         return $this->hasMany(SocialPostLike::class, 'social_post_id');
     }
+    
+
 }

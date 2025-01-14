@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Requests\Admin\CreateUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Level;
@@ -9,6 +8,7 @@ use App\Models\National;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController
 {
@@ -49,6 +49,10 @@ class UserController
      */
     public function store(CreateUserRequest $request)
     {
+        $request->validate([
+            'g-recaptcha-response' => 'required|captcha',  // Xác thực reCAPTCHA
+        ]);
+
         $user = new User();
         $user->name = $request->get('name') ?? 'NO NAME';
         $user->email = $request->get('email');
@@ -93,6 +97,16 @@ class UserController
         $user = User::findOrFail($id);
         $nationals = National::all();
         $levels = Level::all();
+
+        if (Auth::user()->id == $id) {
+            $edit_myself = true;
+        } else {
+            $edit_myself = false;
+        }
+
+        if(Auth::user()->id != 1 && ($id == 1 || ($user["type"] == 1 && $edit_myself == false))){
+            return redirect()->route('admin.user.index')->with('error','You have\'t permission to edit this user ');
+        }
 
         return view('admin.user.edit', compact('user', 'nationals', 'levels'));
     }
@@ -148,8 +162,12 @@ class UserController
     public function blockUser(string $id)
     {
         $user = User::findOrFail($id);
-        $user->blockUser();
 
+        if(($id == 1) || (Auth::user()->id != 1 && $user["type"] == 1)){
+            return redirect()->route('admin.user.index')->with('error','You have\'t permission to block this user ');
+        }
+
+        $user->blockUser();
         return redirect()->route('admin.user.index')->with('success', 'User blocked successfully.');
     }
 
@@ -159,8 +177,11 @@ class UserController
     public function unblockUser(string $id)
     {
         $user = User::findOrFail($id);
-        $user->unblockUser();
+        if(($id == 1) || (Auth::user()->id != 1 && $user["type"] == 1)){
+            return redirect()->route('admin.user.index')->with('error','You have\'t permission to unblock this user ');
+        }
 
+        $user->unblockUser();
         return redirect()->route('admin.user.index')->with('success', 'User unblocked successfully.');
     }
 }

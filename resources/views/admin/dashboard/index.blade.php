@@ -88,7 +88,7 @@
       </div>
 
       <div class="layers bd bgc-white p-20">
-        <a class="btn btn-success" href="#">View posts</a>
+      <a class="btn btn-success" href="{{route('admin.post.index')}}">View posts</a>
       </div>
     </div>
 

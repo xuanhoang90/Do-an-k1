@@ -34,6 +34,7 @@ export const register = createAsyncThunk(
         email: credentials.email,
         password: credentials.password,
         password_confirmation: credentials.passwordConfirmation,
+        recaptcha: credentials.recaptcha
       }, {
         withCredentials: true,
       });
